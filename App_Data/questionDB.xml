@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<questionDB>
+  <question>
+    <ques_no>1</ques_no>
+    <ques> what is the capital of India?</ques>
+    <ans1> Calcutta</ans1>
+    <ans2> Mumbai</ans2>
+    <ans3>New Delhi</ans3>
+    <ans4>Madras</ans4>
+    <ans>New Delhi</ans>
+  </question>
+  <question>
+    <ques_no>2</ques_no>
+    <ques>what is the capital of W.B?</ques>
+    <ans1>Kolkata</ans1>
+    <ans2> Mumbai</ans2>
+    <ans3>New Delhi</ans3>
+    <ans4>Madras</ans4>
+    <ans>Kolkata</ans>
+  </question>
+  <question>
+    <ques_no>3</ques_no>
+    <ques>what is the capital of Maharashtra?</ques>
+    <ans1>Calcutta</ans1>
+    <ans2>Mumbai</ans2>
+    <ans3>New Delhi</ans3>
+    <ans4>Madras</ans4>
+    <ans>Mumbai</ans>
+  </question>
+</questionDB>

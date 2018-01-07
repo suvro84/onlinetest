@@ -1,0 +1,155 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*_____________________________________________suckertre menu/________________________________*/
+/*top nav menu*/
+.mainNav{
+width:996px;
+background-image: url(../images/hd-bkgd-orange-gradient.gif); 
+background-repeat: repeat-x;
+}
+#treemenu1{
+width:100%;
+text-align:center;
+}
+.mainNav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  
+}
+.logout{
+background:url(../images/logout.png) no-repeat 25px center !important;
+}
+
+/*Top level list items*/
+
+.mainNav ul li {
+  position: relative;
+  display: inline;
+  float: left;
+  height: 30px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:11px;
+  font-weight: bold !important;
+  color: #999999;
+  text-align: center;
+  border-left: 1px solid #cccccc; 
+}
+
+/*Top level menu link items style*/
+.mainNav ul li a {
+  background-image: url(../images/hd-bkgd-orange-gradient.gif); 
+  background-repeat: repeat-x;
+  display: block;
+  width: 141px; /*Width of top level menu link items*/
+  height: 21px;    
+  text-decoration: none;
+  padding: 8px 0px 0px 0px;
+  color: #55899e;
+  border-right: 1px solid #cccccc;
+}
+
+.mainNav ul li a.current, .mainNav ul li a.active{
+  background-image: url(../images/nav-bkgd-on.gif); 
+  background-repeat: repeat-x;
+  display: block;
+  color: #184163;
+  width: 141px; /*Width of top level menu link items*/
+  text-decoration: none;
+  height: 21px;
+  padding: 8px 0px 0px 0px;
+}
+
+.mainNav ul li a:hover {
+  background-image: url(../images/nav-bkgd-on.gif); 
+  background-repeat: repeat-x;
+  color: #184163;
+}
+	
+/*1st sub level menu*/
+.mainNav ul li ul {
+  background-color: #e5ebf1;
+  color: #184163;
+  left: 0;
+  position: absolute;
+  top: 2.8em; /* no need to change, as true value set by script */
+  display:none;
+  float:left;
+  width:141px;
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.mainNav ul li ul li {
+  background-color: #e5ebf1;
+  display: list-item;
+  float: none;
+}
+
+/*All subsequent sub menu levels offset after 1st level sub menu */
+.mainNav ul li ul li ul { 
+  background-color: #e5ebf1;
+  width: 135px;
+  top: 0;
+}
+
+/* Sub level menu links style */
+.mainNav ul li ul li a {
+  display: block;
+  color: #4e8aa4;
+  background-image: none;
+  background-color: #f4f4b0;
+  text-decoration: none;
+  border-right: 1px solid #ccc;
+}
+
+.mainNav ul li ul li a:hover {
+  color: #184163;
+  background-image: none;
+  background-color: #b8d8dc;  
+}
+/*end suckertree menu*/
+
+/*main page menu style START*/
+
+.main_menu{
+width:930px;
+margin:20px 0 0 10px;
+float:left;
+}
+.main_menu ul{
+margin:0;
+padding:0;
+width:910px;
+list-style-type:none;
+}
+
+.main_menu ul li {
+background:url(../images/menu_bg.jpg) repeat-x top left;
+height:35px;
+border:1px solid #b9d9db;
+margin:0 0 8px 0;
+}
+.main_menu ul li a{
+color:#04323f;
+font-size:12px;
+font-weight:bold;
+font-family:Arial, Helvetica, sans-serif;
+float:left;
+margin:10px 0 0 10px;
+}
+.main_menu ul li a:hover{
+color:#207dc3;
+}
+.main_menu ul li img{
+float:left;
+display:block;
+margin:4px 0 0 20px;
+}
+.main_menu ul li span{
+width:100px;
+display:block;
+float:left;
+}
+
+/*main page menu style END*/

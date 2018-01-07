@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--My Movie Collection-->
+<movies>
+  <movie>
+    <title>Harry Potter and the Chamber of Secrets</title>
+    <director>Chris Columbus</director>
+    <year_of_release>2002</year_of_release>
+    <format>VHS</format>
+  </movie>
+  <movie>
+    <title>Harry Potter and the Prisoner of Azkaban </title>
+    <director>Alfonso Cuaron</director>
+    <year_of_release>2004</year_of_release>
+    <format>DVD</format>
+  </movie>
+</movies>

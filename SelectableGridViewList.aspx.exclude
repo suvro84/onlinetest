@@ -1,0 +1,31 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SelectableGridViewList.aspx.cs" Inherits="SelectableGridViewList" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <asp:GridView ID="gvUsers" runat="server" AutoGenerateColumns="False" DataKeyNames="ID"
+            OnRowDataBound="gvUsers_RowDataBound">
+            <Columns>
+                <asp:BoundField DataField="ID" HeaderText="ID" ReadOnly="True" />
+                <asp:BoundField DataField="Value" HeaderText="Value" ReadOnly="True" />
+                <%-- <asp:BoundField DataField="Email" HeaderText="Email" ReadOnly="True" />                    --%>
+            </Columns>
+            <FooterStyle BackColor="White" ForeColor="#330099" />
+            <RowStyle BackColor="White" ForeColor="#330099" />
+            <SelectedRowStyle BackColor="#FFCC66" Font-Bold="True" ForeColor="#663399" />
+            <PagerStyle BackColor="#FFFFCC" ForeColor="#330099" HorizontalAlign="Center" />
+            <HeaderStyle BackColor="#F06300" Font-Bold="True" ForeColor="#FFFFCC" />
+        </asp:GridView>
+        
+         <asp:Button ID="btn_dwn" runat="server" Text="DOWN" onclick="btn_dwn_Click" />
+         <asp:Button ID="btn_up" runat="server" Text="UP" onclick="btn_up_Click" />
+    </div>
+    </form>
+</body>
+</html>

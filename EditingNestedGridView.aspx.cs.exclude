@@ -1,0 +1,209 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+
+namespace dotnetspeaks.LiveDemos.ASP.NET.GridView
+{
+    public partial class EditingNestedGridView : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                DataTable dtParentData = GetParentTableData();
+                gvParent.DataSource = dtParentData;
+                gvParent.DataBind();
+                GridViewChildPageIndex();
+            }
+        }
+
+        protected void btnExpandRow_Click(object sender, EventArgs e)
+        {
+            DataTable dtParentData = GetParentTableData();
+            gvParent.DataSource = dtParentData;
+            gvParent.DataBind();
+        }
+
+
+        private DataTable GetParentTableData()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("EmployeeId", typeof(string));
+            table.Columns.Add("EmployeeName", typeof(string));
+            table.Columns.Add("Designation", typeof(string));
+            table.Columns.Add("Location", typeof(string));
+
+            table.Rows.Add(100, "Andy", "S/W Engg", "NY");
+            table.Rows.Add(200, "James", "S/W Engg", "NJ");
+            table.Rows.Add(300, "Ramesh", "Sr. S/W Engg", "Bangalore");
+            table.Rows.Add(400, "George", "Architect", "London");
+            table.Rows.Add(500, "Lisa", "Manager", "Washington");
+            return table;
+
+        }
+
+        private DataTable GetChildTableData()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("SkillID", typeof(string));
+            table.Columns.Add("EmployeeId", typeof(string));
+            table.Columns.Add("SkillSet", typeof(string));
+            table.Columns.Add("Remarks", typeof(string));
+
+            table.Rows.Add("1", "100", "ASP.NET", "Remarks1");
+            table.Rows.Add("2", "100", "SQL", "Remarks2");
+
+            table.Rows.Add("1", "200", "ASP.NET", "Remarks1");
+            table.Rows.Add("2", "200", "SQL", "Remarks2");
+            table.Rows.Add("3", "200", "WCF", "Remarks3");
+
+            table.Rows.Add("4", "300", "PHP", "Remarks1");
+            table.Rows.Add("5", "300", "Oracle", "Remarks20");
+            table.Rows.Add("6", "300", "Javascipt", "Remarks3");
+
+            table.Rows.Add("7", "400", "J2EE", "Remarks1");
+            table.Rows.Add("5", "400", "Oracle", "Remarks2");
+            table.Rows.Add("8", "400", "Struts", "Remarks3");
+
+            table.Rows.Add("9", "500", "J2EE", "Remarks1");
+            table.Rows.Add("10", "500", "ASP.NET", "Remarks2");
+            table.Rows.Add("11", "500", "Oracle", "Remarks3");
+            table.Rows.Add("12", "500", "SQL", "Remarks4");
+            table.Rows.Add("17", "500", "WCF", "Remarks5");
+
+            return table;
+
+        }
+
+
+        protected void gvParent_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string strID = gvParent.DataKeys[e.Row.RowIndex].Value.ToString();
+                Image img = (Image)e.Row.Cells[0].FindControl("img1");
+                Literal ltrl = (Literal)e.Row.FindControl("lit1");
+                ltrl.Text = ltrl.Text.Replace("trCollapseGrid", "trCollapseGrid" + e.Row.RowIndex.ToString());
+                string str = "trCollapseGrid" + e.Row.RowIndex.ToString();
+                e.Row.Cells[0].Attributes.Add("OnClick", "return OpenTable('" + str + "','" + img.ClientID + "','" + strID + "')");
+                e.Row.Cells[0].RowSpan = 1;
+                System.Web.UI.WebControls.GridView gvChild = (System.Web.UI.WebControls.GridView)e.Row.FindControl("gvChild");
+
+                if (Session["ChildPageIndex"] != null)
+                {
+                    DataTable dtPageIndex = (DataTable)Session["ChildPageIndex"];
+                    gvChild.PageIndex = Convert.ToInt16(dtPageIndex.Rows[e.Row.RowIndex][0]);
+
+                }
+                if (hidRowIndex.Value.Equals(strID))
+                {
+                    BindChildgvwChildView(strID, gvChild);
+                    if (!ClientScript.IsStartupScriptRegistered("ChildGrid"))
+                    {
+                        string javScript = "document.getElementById('" + hidRowId.Value + "').style.display = '';";
+                        javScript = javScript + "document.getElementById('" + hidImgId.Value + "').src  = 'images/Expand.gif';";
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ChildGrid", javScript, true);
+                    }
+                }
+
+            }
+        }
+
+        protected void gvChild_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            System.Web.UI.WebControls.GridView gvwChild = ((System.Web.UI.WebControls.GridView)sender);
+            GridViewRow gvRowParent = ((System.Web.UI.WebControls.GridView)sender).Parent.Parent as GridViewRow;
+
+            gvwChild.PageIndex = e.NewPageIndex;
+            if (Session["ChildPageIndex"] != null)
+            {
+                DataTable dtPageIndex = (DataTable)Session["ChildPageIndex"];
+                dtPageIndex.Rows[gvRowParent.RowIndex][0] = e.NewPageIndex;
+            }
+            KeepExpanded(gvwChild, sender);
+
+        }
+
+
+        private void BindChildgvwChildView(string empId, System.Web.UI.WebControls.GridView gvChild)
+        {
+            DataTable dtChildTable = GetChildTableData();
+            DataTable dtCloneChildTable = dtChildTable.Clone();
+
+            DataRow[] gvChildRows = dtChildTable.Select("EmployeeId = " + empId);
+            foreach (DataRow gvChildRow in gvChildRows)
+            {
+                dtCloneChildTable.ImportRow(gvChildRow);
+            }
+            gvChild.DataSource = dtCloneChildTable;
+            gvChild.DataBind();
+        }
+
+        private void GridViewChildPageIndex()
+        {
+            DataTable dtPageIndex = new DataTable();
+            dtPageIndex.Columns.Add("PageIndex", typeof(int));
+            for (int i = 0; i < gvParent.Rows.Count; i++)
+            {
+                dtPageIndex.Rows.Add("0");
+            }
+            Session["ChildPageIndex"] = dtPageIndex;
+        }
+
+
+
+        protected void gvChild_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            System.Web.UI.WebControls.GridView gvwChild = ((System.Web.UI.WebControls.GridView)sender);
+            gvwChild.EditIndex = e.NewEditIndex;
+            KeepExpanded(gvwChild, sender);
+        }
+
+
+        protected void gvChild_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            System.Web.UI.WebControls.GridView gvwChild = ((System.Web.UI.WebControls.GridView)sender);
+            TextBox txtRemarks = ((TextBox)(gvwChild.Rows[e.RowIndex].FindControl("txtEditRemarks")));
+            TextBox txtSkillSet = ((TextBox)(gvwChild.Rows[e.RowIndex].FindControl("txtEditSkillSet")));
+
+            //Code to update table
+
+            gvwChild.EditIndex = -1;
+            KeepExpanded(gvwChild, sender);
+        }
+
+        protected void gvChild_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            System.Web.UI.WebControls.GridView gvwChild = ((System.Web.UI.WebControls.GridView)sender);
+
+            //Code to delete data from table
+
+            KeepExpanded(gvwChild, sender);
+
+        }
+
+        protected void gvChild_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            System.Web.UI.WebControls.GridView gvwChild = ((System.Web.UI.WebControls.GridView)sender);
+            gvwChild.EditIndex = -1;
+            KeepExpanded(gvwChild, sender);
+
+
+        }
+
+        protected void KeepExpanded(System.Web.UI.WebControls.GridView gvwChild, object sender)
+        {
+            GridViewRow gvRowParent = ((System.Web.UI.WebControls.GridView)sender).Parent.Parent as GridViewRow;
+            BindChildgvwChildView(gvParent.DataKeys[gvRowParent.RowIndex].Value.ToString(), gvwChild);
+            if (!ClientScript.IsStartupScriptRegistered("ChildGridIndex"))
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "ChildGridIndex", "document.getElementById('" + hidRowId.Value + "').style.display = '';", true);
+            }
+        }
+    }
+}
+

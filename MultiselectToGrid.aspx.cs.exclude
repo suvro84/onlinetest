@@ -1,0 +1,292 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using System.Collections.Generic;
+
+public partial class MultiselectToGrid : System.Web.UI.Page
+{
+    const string OrderFieldName = "id";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+
+            gridTest.Selection.UnselectAll();
+            if (ViewState["Icount"] == null)
+            {
+                ViewState["Icount"] = 0;
+            }
+            DataTable dt = new DataTable();
+            dt = GetDatatable();
+
+            //lkpCurrency.DataSource = dt;
+            //lkpCurrency.DataBind();
+
+            //GridLookup.DataSource = dt;
+
+            // GridLookup.DataBind();
+            CreateDataTable();
+            // GridLookup.GridView.Width = GridLookup.Width;
+            if (!IsPostBack)
+            {
+                gridTest.DataSource = ViewState["dtdata1"];
+                gridTest.DataBind();
+                hddtCount.Value = Convert.ToString(dt.Rows.Count);
+                // gridTest.Selection.SelectRow ( 0);
+
+                //for (int i = 0; i < 6; i++)
+                //    gridTest.Selection.SelectRow(i);
+
+            }
+
+
+        }
+    }
+    public void bindData()
+    {
+    }
+    public DataTable GetDatatable()
+    {
+        DataTable table = new DataTable();
+        table.Columns.Add("TagName", typeof(string));
+        table.Columns.Add("Rank", typeof(string));
+        table.Columns.Add("id", typeof(int));
+
+        table.Rows.Add("Tagtest1", "test1", 1);
+        table.Rows.Add("Tagtest2", "test2", 2);
+        table.Rows.Add("Tagtest3", "test3", 3);
+        table.Rows.Add("Tagtest4", "test4", 4);
+        table.Rows.Add("Tagtest5", "test5", 5);
+        table.Rows.Add("Tagtest6", "test6", 6);
+        table.Rows.Add("Tagtest7", "test7", 7);
+        table.Rows.Add("Tagtest8", "test8", 8);
+        ViewState["dtdata"] = table;
+
+        return table;
+
+    }
+
+    public void CreateDataTable()
+    {
+        DataTable table = new DataTable();
+        table.Columns.Add("TagName", typeof(string));
+        table.Columns.Add("Rank", typeof(string));
+        table.Columns.Add("id", typeof(int));
+
+        table.Rows.Add("Tagtest9", "test1", 9);
+        table.Rows.Add("Tagtest10", "test2", 10);
+        table.Rows.Add("Tagtest11", "test3", 11);
+        table.Rows.Add("Tagtest12", "test4", 12);
+        table.Rows.Add("Tagtest13", "test5", 13);
+        table.Rows.Add("Tagtest14", "test6", 14);
+        table.Rows.Add("Tagtest15", "test7", 15);
+        table.Rows.Add("Tagtest16", "test8", 16);
+        ViewState["dtdata1"] = table;
+    }
+    //protected void Button1_Click(object sender, EventArgs e)
+    //{
+    //    // GridLookup.GridView.Visible = true;
+    //    //int i = GridLookup.GridView.row
+    //    //Response.Write(getval);
+    //    //DataView Dv = GridLookup
+    //    //GridLookup
+    //    //DataTable dt = new DataTable();
+    //    //dt = (DataTable)GridLookup.GridView.DataSource;
+    //    //for (int i = 0; i < Dv.Count; i+ +)
+    //    //{
+    //    //    if (Dv[i][0].ToString() == "true")
+    //    //    {
+    //    //        int a = 1;
+    //    //    }
+    //    //}
+    //    DataTable myDataTable = new DataTable();
+    //    myDataTable = (DataTable)ViewState["dtdata"];
+    //    var results = from myRow in myDataTable.AsEnumerable() where myRow.Field<int>("id") == 1 select myRow;
+
+    //    //var results = from myRow in myDataTable.AsEnumerable() where myRow.Field<int>("id") in(1,2) select myRow;
+
+    //    //     List<string> id = new List<string>();
+    //    //id.Add("1");
+    //    //id.Add("2");
+    //    //var list = from t in myDataTable
+    //    //            where id.contains(t.column1)
+    //    //            select t;
+
+    //    //names.Add("Value3");
+    //    //names.Add("Value4");
+
+
+    //    //GridLookup.DataSource = results;
+
+    //    //GridLookup.DataBind();
+
+    //    //List<MyType> data = new List<MyType>(myDataTable.Rows.Count);
+    //    //foreach (DataRow row in myDataTable.Rows)
+    //    //{
+    //    //    data.Add(new MyType((int)row[0], (string)row[1], (string)row[1], (string)row[1]));
+    //    //}
+    //    string fruit = GridLookup.Text;
+    //    string[] split = fruit.Split(',');
+    //    List<string> names = new List<string>();
+    //    for (int i = 0; i < split.Length; i++)
+    //        names.Add(split[i].ToString().Trim());
+
+    //    //List<myDataTable> list = (from p in myDataTable where names.Contains(p.id) select p).ToList();
+
+    //    var query = from r in myDataTable.AsEnumerable() where names.Contains(r.Field<string>("TagName")) select r;
+    //    DataTable newDT = query.CopyToDataTable();
+    //    DataTable newtable = new DataTable();
+    //    newtable = (DataTable)ViewState["dtdata1"];
+    //    for (int j = 0; j < newDT.Rows.Count; j++)
+    //    {
+    //        newtable.Rows.Add(newDT.Rows[j][0].ToString(), newDT.Rows[j][1].ToString(), newDT.Rows[j][2].ToString());
+    //    }
+    //    // newtable.Rows.Add(txtContactName.Text, txtCompanyName.Text, txtCity.Text, txtRegion.Text, txtCountry.Text);
+    //    ViewState["dtdata1"] = newtable;
+    //    gridTest.DataSource = ViewState["dtdata1"];
+    //    gridTest.DataBind();
+
+
+
+
+
+
+    //}
+    protected void btn_UP_Click(object sender, EventArgs e)
+    {
+
+        Swap(Convert.ToInt32(ViewState["Icount"]), Convert.ToInt32(ViewState["Icount"]) - 1, "up");
+        ViewState["Icount"] = Convert.ToInt32(ViewState["Icount"]) + 1;
+        // DataView dv = (DataView )gridTest;
+        // DevExpress.Web.ASPxGridView.ASPxGridView detailGrid = gridTest;
+        // int lastval = gridTest.GetSelectedRows();
+        // int i=gridTest
+        //DevExpress.XtraGrid.Views.Grid.GridView view = gridTest;
+        // int j= gridTest.GetSelectedFieldValues();
+        //view.GridControl.Focus();
+        //int index = view.FocusedRowHandle;
+        //if (index <= 0) return;
+
+        //DataRow row1 = view.GetDataRow(index);
+        //DataRow row2 = view.GetDataRow(index - 1);
+        //object val1 = row1[OrderFieldName];
+        //object val2 = row2[OrderFieldName];
+        //row1[OrderFieldName] = val2;
+        //row2[OrderFieldName] = val1;
+
+        //view.FocusedRowHandle = index - 1;
+
+
+        //DataTable dtitem = new DataTable();
+        //dtitem = GetDatatable();
+        //DataRow drTemp = null;
+        //for (int i = 0; i < dtitem.Rows.Count; i++)
+        //{
+
+        //    // if (Convert.ToInt32(dtitem.Rows[i]["id"]) == Convert.ToInt32(arrIds[j]))
+        //    if (Convert.ToInt32(dtitem.Rows[i]["id"]) == 1)
+        //    {
+        //        DataRow dr = dtitem.Rows[i];
+        //        DataRow dr1 = dtitem.Rows[i + 1];
+        //        drTemp = dr;
+        //        dr = dr1;
+        //        dr = drTemp;
+        //        break;
+        //    }
+
+        //if (Convert.ToInt32(dr["ID"]) == Convert.ToInt32(arrIds[j]))
+        //{
+        //    dtitem.Rows.Remove(dr);
+        //    flag = true;
+        //}
+    }
+    //dtitem.AcceptChanges();
+
+    private void Swap(int index1, int index2, string opt)
+    {
+        //If the indexes are equal or one of them is illegal, return.
+        //if (index1 == index2 || index1 < 0 || index2 < 0
+        //    || index1 >= _bindSrc.Count || index2 >= _bindSrc.Count)
+        //    return;
+
+        //Make sure index1 <= index2
+        if (index1 > index2)
+        {
+            int index = index1;
+            index1 = index2;
+            index2 = index;
+        }
+        //Create two rows with the same values.
+        DataTable dt = (DataTable)ViewState["dtdata1"];
+        DataRow row1 = dt.NewRow();
+        DataRow row2 = dt.NewRow();
+        row1.ItemArray = dt.Rows[index1].ItemArray;
+        row2.ItemArray = dt.Rows[index2].ItemArray;
+
+        //Remove the old rows.
+        dt.Rows.RemoveAt(index2);
+        dt.Rows.RemoveAt(index1);
+
+        //Add the new rows.
+        dt.Rows.InsertAt(row2, index1);
+        dt.Rows.InsertAt(row1, index2);
+        gridTest.DataSource = dt;
+        gridTest.DataBind();
+        if (opt == "dwn")
+        {
+            gridTest.Selection.SelectRow(index2);
+            gridTest.Selection.UnselectRow(index1);
+           
+        }
+        else
+        {
+            gridTest.Selection.SelectRow(index1);
+            gridTest.Selection.UnselectRow(index2);
+        }
+
+
+
+    }
+
+    //protected void btn_dwn_Click(object sender, EventArgs e)
+    //{
+    //    Swap(Convert.ToInt32(ViewState["Icount"]), Convert.ToInt32(ViewState["Icount"]) + 1, "dwn");
+    //    ViewState["Icount"] = Convert.ToInt32(ViewState["Icount"]) + 1;
+    //}
+
+
+    //protected void GridLookup_ValueChanged(object sender, EventArgs e)
+    //{
+    //    Response.Write("hi");
+
+    //}
+
+    //protected void GridLookup_ButtonClick(object source, DevExpress.Web.ASPxEditors.ButtonEditClickEventArgs e)
+    //{
+    //    Response.Write("hoo");
+    //}
+    //protected void GridLookup_CustomJSProperties(object sender, DevExpress.Web.ASPxClasses.CustomJSPropertiesEventArgs e)
+    //{
+    //    Response.Write("hkkkk");
+    //}
+    //protected void lkpCurrency_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    string s = lkpCurrency.SelectedItem.GetValue("TagName").ToString();
+    //}
+    protected void btn_dwn_Click(object sender, EventArgs e)
+    {
+        Swap(Convert.ToInt32(ViewState["Icount"]), Convert.ToInt32(ViewState["Icount"]) + 1, "dwn");
+        ViewState["Icount"] = Convert.ToInt32(ViewState["Icount"]) + 1;
+    }
+
+
+}

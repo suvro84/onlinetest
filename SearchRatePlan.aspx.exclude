@@ -1,0 +1,686 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SearchRatePlan.aspx.cs" Inherits="SearchRatePlan" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"  type="text/javascript"></script>
+
+           
+
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script> 
+
+ 
+
+<script language="javascript" type="text/javascript">
+
+ 
+
+     var CheckBoxContainer = "<%=CheckBoxContainer%>";
+
+     $(document).ready(function () {
+
+ 
+
+         // $(":checkbox").click(function ()
+
+         $(":checkbox").live('click', function () {
+
+ 
+
+             var CurrentCheckBox = $(this);
+
+ 
+
+             CurrentCheckBox.closest(CheckBoxContainer).find(":checkbox").removeClass("current");
+
+             CurrentCheckBox.addClass("current")
+
+             if (CurrentCheckBox.is(":checked")) {
+
+                 CurrentCheckBox.closest(CheckBoxContainer).find(":checkbox:not(.current)").attr("disabled", true);
+
+             } else {
+
+ 
+
+                 CurrentCheckBox.closest(CheckBoxContainer).find(":checkbox:not(.current)").attr("disabled", false);
+
+             }
+
+ 
+
+ 
+
+         });
+
+ 
+
+         var btnRetieve = $("#<%= btnRetieve.ClientID %>");
+
+         var btnRetieveMultiProperty = $("#<%= btnRetieveMultiProperty.ClientID %>")
+
+         var ddlMarketSegment = $("#<%= ddlMarketSegment.ClientID %>");
+
+         var txtRatePlanCode1 = $("#<%= txtRatePlanCode1.ClientID %>");
+
+ 
+
+         var txtRatePlanCode2 = $("#<%= txtRatePlanCode2.ClientID %>");
+
+         var lblMessage = $("#lblMessage");
+
+ 
+
+         btnRetieve.click(function () {
+
+ 
+
+             if (ddlMarketSegment.val() == "1" && txtRatePlanCode1.val() == "") {
+
+                 lblMessage.text("Please Select a Market Segment or Enter a Rate Plan Code");
+
+                 return false;
+
+             }
+
+ 
+
+             if (ddlMarketSegment.val() != "1" && txtRatePlanCode1.val() != "") {
+
+                 lblMessage.text(" Market Segment and Rate Plan Code Both Cannot be Selected ");
+
+                 return false;
+
+             }
+
+ 
+
+ 
+
+         });
+
+ 
+
+         ddlMarketSegment.click(function () {
+
+             if (txtRatePlanCode1.val() != "") {
+
+                 lblMessage.text("Rate Plan Code is Already Entered");
+
+                 return false;
+
+             }
+
+             else {
+
+                 lblMessage.text(" ");
+
+             }
+
+         });
+
+ 
+
+         txtRatePlanCode1.keydown(function () {
+
+ 
+
+             if (ddlMarketSegment.val() != "1") {
+
+ 
+
+                 lblMessage.text("Market Segment is Already Selected");
+
+                 //txtRatePlanCode1.text("");
+
+                 return false;
+
+             }
+
+             else {
+
+                 lblMessage.text(" ");
+
+             }
+
+         });
+
+ 
+
+         btnRetieveMultiProperty.click(function () {
+
+ 
+
+             if (txtRatePlanCode2.val() == "") {
+
+                 lblMessage.text("Please Enter a Rate Plan Code");
+
+                 return false;
+
+             }
+
+ 
+
+         });
+
+ 
+
+ 
+
+ 
+
+     });
+
+       </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    
+    
+    
+    
+    
+
+
+      
+
+           
+
+ 
+
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+
+    <ContentTemplate>
+
+   
+
+    
+
+    <h1>
+
+        ViewSelectedProperties</h1>
+
+ 
+
+        <label id="lblMessage" style="color:Red"></label>
+
+    <div id="divSinglePropertyRatePlanSerch" runat="server">
+
+        <asp:Label ID="lblRatePlanSearchHd1" runat="server" Text="<%$ Resources:RQTWeb, RatePlanSearchHd1%>"
+
+            EnableViewState="false"></asp:Label>
+
+        <br />
+
+        <br />
+
+        <asp:Label ID="lblMarketSegment" runat="server" Text="<%$ Resources:RQTWeb, MarketSegment3%>"
+
+            EnableViewState="false"></asp:Label>
+
+        &nbsp;
+
+        <asp:DropDownList ID="ddlMarketSegment" runat="server" DataTextField="MarketSegmentName"
+
+            DataValueField="MarketSegmentId" EnableViewState="true">
+
+        </asp:DropDownList>
+
+        &nbsp;&nbsp;&nbsp;
+
+        <asp:Label ID="lblOr" runat="server" Text="<%$ Resources:RQTWeb, Or%>" EnableViewState="false"></asp:Label>
+
+        &nbsp;&nbsp;&nbsp;<asp:Label ID="lblRatePlanCode1" runat="server" Text="<%$ Resources:RQTWeb, RatePlanCode1%>"
+
+            EnableViewState="false"></asp:Label><span class="mandatory">*</span><input id="txtRatePlanCode1" type="text"
+
+                runat="server"  maxlength="6"  class="{validate:{required:true,alphanumeric:true}}" />
+
+        &nbsp;&nbsp;&nbsp;<asp:Button ID="btnRetieve" runat="server" Text="Retieve" OnClick="btnRetieve_Click"
+
+            EnableViewState="false" />
+
+    </div>
+
+    <div id="divMultiPropertyRatePlanSerch" runat="server">
+
+        <asp:Label ID="lblRatePlanSearchHd2" runat="server" Text="<%$ Resources:RQTWeb, RatePlanSearchHd2%>"
+
+            EnableViewState="false"></asp:Label>
+
+        <br />
+
+        <br />
+
+        <asp:Label ID="lblRatePlanCode2" runat="server" Text="<%$ Resources:RQTWeb, RatePlanCode2%>"
+
+            EnableViewState="false"></asp:Label>
+
+      <span class="mandatory">*</span>
+
+        <input id="txtRatePlanCode2" type="text" runat="server" enableviewstate="false"  maxlength="6"  class="{validate:{required:true,alphanumeric:true}}"   /><br />
+
+        <table border="0" cellspacing="0" cellpadding="0">
+
+            <tr>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnBHimg" ImageUrl="~/Images/Rate/hawthorn_NotChecked.gif" AlternateText="hawthorn"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnBHimg_Click" />
+
+                </td>
+
+                <td width="10">
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnRAimg" ImageUrl="~/Images/Rate/ramada_NotChecked.gif" AlternateText="ramada"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnRAimg_Click" />
+
+                </td>
+
+                <td width="10">
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnTRYPimg" ImageUrl="~/Images/Rate/tryp_NotChecked.gif" AlternateText="TRYP"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnTRYPimg_Click" />
+
+                </td>
+
+                <td width="10">
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnDIimg" ImageUrl="~/Images/Rate/daysInn_NotChecked.gif" AlternateText="days inn"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnDIimg_Click" />
+
+                </td>
+
+                <td width="10">
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnKIimg" ImageUrl="~/Images/Rate/knightsinn_NotChecked.gif" AlternateText="knights inn"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnKIimg_Click" />
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnSEimg" ImageUrl="~/Images/Rate/super8_NotChecked.gif" AlternateText="super 8"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnSEimg_Click" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnBMimg" ImageUrl="~/Images/Rate/baymont_NotChecked.gif" AlternateText="baymont"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnBMimg_Click" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnMTimg" ImageUrl="~/Images/Rate/microtel_NotChecked.gif" AlternateText="microtel"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnMTimg_Click" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnHJimg" ImageUrl="~/Images/Rate/HJ_NotChecked.gif" AlternateText="howard johnson"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnHJimg_Click" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:ImageButton ID="ibtnTLimg" ImageUrl="~/Images/Rate/travelodge_notchecked.gif" AlternateText="travelodge"
+
+                        Width="106" Height="71" runat="server" OnCommand="ibtnTLimg_Click" />
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <br />
+
+        <table border="0" cellspacing="0" cellpadding="0">
+
+            <tr>
+
+                <td>
+
+                    <asp:Label ID="lblPropertyId" runat="server" Text="<%$ Resources:RQTWeb, PropertyId%>"
+
+                        EnableViewState="false"></asp:Label>
+
+                    <input id="txtPropertyId" type="text" runat="server" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:Label ID="lblPropertyName" runat="server" Text="<%$ Resources:RQTWeb, PropertyName%>"
+
+                        EnableViewState="false"></asp:Label>
+
+                    <input id="txtPropertyName" type="text" runat="server" />
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <table border="0" cellspacing="0" cellpadding="0">
+
+            <tr>
+
+                <td>
+
+                    <asp:Label ID="lblCity" runat="server" Text="<%$ Resources:RQTWeb, City%>" EnableViewState="false"></asp:Label>
+
+                    <input id="txtcity" type="text" runat="server" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:Label ID="lblContry" runat="server" Text="<%$ Resources:RQTWeb, Contry%>" EnableViewState="false"></asp:Label>
+
+                    <asp:DropDownList ID="ddlCountry" runat="server">
+
+                    </asp:DropDownList>
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:Label ID="lblState" runat="server" Text="<%$ Resources:RQTWeb, State%>" EnableViewState="false"></asp:Label>
+
+                    <asp:DropDownList ID="ddlState" runat="server">
+
+                    </asp:DropDownList>
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+                <td>
+
+                    <asp:Button ID="btnRetieveMultiProperty" runat="server" Text="Retieve"
+
+                        onclick="btnRetieveMultiProperty_Click" />
+
+                </td>
+
+                <td>
+
+                    &nbsp;
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <br />
+
+    <div id="div3">
+
+        <asp:GridView ID="gvRatePlanDetails" runat="server" AllowPaging="true" AllowSorting="true" AutoGenerateColumns="False"
+
+            EnableViewState="True" OnRowDataBound="gvRatePlanDetails_RowDataBound">
+
+            <Columns>
+
+                <asp:TemplateField>
+
+                    <HeaderTemplate>
+
+                        <asp:Button ID="btnModify" runat="server" Text="Modify" />
+
+                    </HeaderTemplate>
+
+                    <ItemTemplate>
+
+                        <asp:CheckBox ID="cbModify" runat="server" />
+
+                    </ItemTemplate>
+
+                </asp:TemplateField>
+
+                <asp:TemplateField>
+
+                    <HeaderTemplate>
+
+                        <asp:Button ID="btnDisable" runat="server" Text="Disable" OnClick="btnDisable_Click" />
+
+ 
+
+                    </HeaderTemplate>
+
+                    <ItemTemplate>
+
+                        <asp:CheckBox ID="cbDisable" runat="server" />
+
+                         <asp:HiddenField ID="hfRateplanMode" Value='<%#Eval("RatePlaneMode") %>' runat="server" />
+
+                    </ItemTemplate>
+
+                </asp:TemplateField>
+
+                <asp:BoundField DataField="PropertyList" HeaderText="Property ID" />
+
+                <asp:BoundField DataField="RateCategoryCode" HeaderText="Rate Plan Code" />
+
+                <asp:BoundField DataField="MarketSegment" HeaderText="Market Segment" />
+
+                <asp:BoundField DataField="RatePlanStatus" HeaderText="Rate Plan Status" />
+
+                <asp:BoundField DataField="TranId" HeaderText="Secured Rate Plan " />
+
+                <asp:BoundField DataField="RatePlanName" HeaderText="Rate Plan Name" />
+
+                <asp:BoundField DataField="RateType" HeaderText="Rate Type" />
+
+                <asp:BoundField DataField="Amount" HeaderText="Amount" />
+
+                <asp:BoundField DataField="BeginDate" HeaderText="Begin Sell Date" />
+
+                <asp:BoundField DataField="EndDate" HeaderText="End Sell Date" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="LRA Status" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="GTD Policy" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="CXL Policy" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="Advanced Booking # Days" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="Min.LOS" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="Max.LOS" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="Commissionable" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="Profile Association" />
+
+                <asp:BoundField DataField="LastRoomAvil" HeaderText="Channel" />
+
+                
+
+            </Columns>
+
+        </asp:GridView>
+
+    </div>
+
+    </ContentTemplate>
+
+    </asp:UpdatePanel>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+    </form>
+</body>
+</html>

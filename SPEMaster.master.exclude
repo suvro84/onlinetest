@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="SPEMaster.master.cs" Inherits="SPEMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head" runat="server">
+    <title>SPEWeb</title>
+    <link rel="stylesheet" type="text/css" href="../CSS/screen.css" />
+    <link rel="stylesheet" type="text/css" href="../CSS/popUp.css" />
+    <%--<script type="text/javascript" src="../Script/jquery.min.js"></script>--%>
+    <script src="../Script/jquery.js"  type="text/javascript"></script>
+    <script src="../Script/jquery.metadata.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../Script/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="../Script/jquery.popupWindow.js"></script>
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+    <script type="text/javascript">
+
+        function ReplaceNotificationMessage(message) {
+            $("ul#holder").html(message);
+            $("div#main").css('display', 'block');
+            $("ul#holder").quickPager({
+                pageSize: 1,
+                currentPage: 1,
+                holder: ""
+            });
+        }
+    </script>
+
+     <script src="../Script/jquery.validate.js" type="text/javascript"></script>
+     <script type="text/javascript" src="../Script/quickpager.jquery.js"></script>
+     <script type="text/javascript">
+         $(document).ready(function () {
+
+             var container = $('div.container');
+             // validate the form when it is submitted
+             var validator = $("#mainForm").validate({
+                 errorContainer: container,
+                 errorLabelContainer: $("ul", container),
+                 wrapper: 'li',
+                 meta: "validate"
+             });
+         });
+            </script>
+</head>
+<body>
+    <form id="mainForm" runat="server"  clientidmode="Static">
+   
+        <div id="outerGrid">
+        <!--Top menu -->
+        <div id="userMenu">
+  	        <ul>
+    	        <li><a class="landing" href="#">Landing</a></li>
+                <li><a class="newProperty" href="#">Setup New Property</a></li>
+                <li><a class="help" href="#">Help</a></li>
+                <li><a class="exit" href="#">Exit</a></li>
+            </ul>
+        </div> 
+            <!--Body container div starts here -->
+            <div id="mainGrid">
+            <%--<uc1:LeftMenu ID="ucLeftMenu" runat="server"/>--%>
+            <asp:HiddenField ID="hfErrorMessage" runat="server" />
+        
+        <div id="mainContent_container">
+            <div id="mainContent_header">
+        	    <div id="left">
+            	    <div id="logo"><p><img src="<%=Page.ResolveUrl("~")%>Image/WHG_logo.jpg" title="WHG Logo" alt="WHG Logo" width="100" height="28" /></p></div>
+                    <div id="welcomeTxt">
+                	    <p class="userWelcome">Welcome Test User Revenue</p>
+                        <p class="userWelcome">You last visited this site on 17/03/2011</p>
+                    </div>
+                </div>
+        	    <div id="right">
+            	    <div>Search
+                	    <select>
+                        <option value="Win95">Lorem Ipsum is </option>
+                        <option value="WinNT">Lorem Ipsum </option>
+                        <option value="OSX">Lorem Ipsum is </option>
+                        </select>
+                    <input type="image" src="<%=Page.ResolveUrl("~")%>Image/btn_submit_top.jpg" value="Go" id="Gobtn" />
+                    
+ 
+                </div>
+                <div><a href="<%=Page.ResolveUrl("~")%>PropertyManagement/PropertyAdvanceSearch.aspx">Advance Search</a></div>
+               </div>
+            </div>
+            <div class="MainBody">
+                <asp:ContentPlaceHolder ID="DefaultContent"  runat="server" />
+            </div>
+           </div>
+          </div>
+        </div>
+    
+    </form>
+</body>
+</html>

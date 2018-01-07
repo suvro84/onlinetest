@@ -1,0 +1,199 @@
+﻿.formDiv
+{
+    width: 370px;
+    margin: 0 auto;
+}
+
+.formDiv .label
+{
+    width: 120px;
+    float: left;
+    display: block;
+    text-align: right;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+
+
+.formDiv input[type=text], input[type=password], input[type=checkbox], .formDiv select
+{
+    float: left;
+    margin-left: 5px;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+.formDiv .buttonDiv
+{
+    float: left;
+    margin-left: 125px;
+}
+
+label.error
+{
+    color: red;
+    font-style: italic;
+    margin-left: 125px;
+    margin-bottom: 2px;
+}
+input.error
+{
+    border: 1px solid red;
+    background-color: #FFEEEE;
+}
+.required
+{
+    color: red;
+}
+
+.formDiv .readOnly
+{
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.formDiv h2
+{
+    margin-bottom: 8px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid;
+    border-bottom-color: #ccc;
+    text-align: center;
+}
+.ajax_indicator
+{
+    background-image: url(images\ajax_activity.gif);
+    visibility: hidden;
+    font-weight: bold;
+    margin-left: 5px;
+}
+.error-container
+{
+    font-weight: bold;
+}
+.error-container ul
+{
+    color: Red;
+}
+.error-container ul li label
+{
+    padding: 2px;
+    margin: 2px;
+}
+
+
+/* For Grid */
+
+
+#grid
+{
+    width: 100%; /* use this field to set width of the whole grid */
+    display: table;
+    margin: 0 auto;
+}
+
+#grid table
+{
+    width: 100%;
+}
+
+
+#grid #pager
+{
+    white-space: nowrap;
+    font-size: 9pt;
+    margin-bottom: 5px;
+}
+
+
+#grid #pager .section
+{
+    width: 33.3%;
+    vertical-align: middle;
+}
+
+
+#grid #pager #navButtons table
+{
+    width: 165px;
+    margin-left: auto; /* center */
+    margin-right: auto;
+}
+
+#grid #pager #navButtons table td
+{
+    text-align: center;
+}
+
+#grid #pager #navButtons .disabled
+{
+    color: #C0C0C0;
+    text-align: center;
+}
+
+#grid #pager #navButtons a
+{
+    text-decoration: none;
+}
+
+#grid #pager #navButtons a
+{
+    text-decoration: none;
+}
+
+#grid #pager #rowsPerPage
+{
+    text-align: right;
+}
+
+#grid #data table
+{
+    border: solid 1px #e8eef4;
+    border-collapse: collapse;
+}
+
+#grid #data table td
+{
+    padding: 5px;
+    border: solid 1px #e8eef4;
+}
+
+#grid #data table th
+{
+    padding: 6px 5px;
+    text-align: left;
+    background-color: #e8eef4;
+    border: solid 1px #e8eef4;
+    white-space: nowrap;
+}
+.centerDiv
+{
+    width: 370px;
+    margin: 0 auto;
+}
+.bold
+{
+    font-weight: bold;
+}
+
+fieldset
+{
+    margin: 1.5em 0 0 0;
+    padding: 0;
+}
+legend
+{
+    margin-left: 1em;
+    font-weight: bold;
+}
+
+
+.autocomplete-w1 { background:url(img/shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:8px 0 0 6px; /* IE6 fix: */ _background:none; _margin:0; }
+.autocomplete { border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
+.autocomplete .selected { background:#F0F0F0; }
+.autocomplete div { padding:2px 5px; white-space:nowrap; }
+.autocomplete strong { font-weight:normal; color:#3399FF; }
+
+

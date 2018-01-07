@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Windows.Forms;
+
+public partial class testDevExpressGrid : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            GridView1.DataSource = GetDatatable();
+            GridView1.DataBind();
+
+            GridLookup.DataSource = GetDatatable();
+            GridLookup.DataBind();
+        }
+    }
+
+    public DataTable GetDatatable()
+    {
+        DataTable table = new DataTable();
+        table.Columns.Add("ID", typeof(int));
+        table.Columns.Add("Value", typeof(string));
+        table.Rows.Add(1, "test1");
+        table.Rows.Add(2, "test2");
+        table.Rows.Add(3, "test3");
+        table.Rows.Add(4, "test4");
+        table.Rows.Add(5, "test5");
+        table.Rows.Add(6, "test6");
+        table.Rows.Add(7, "test7");
+        table.Rows.Add(8, "test8");
+        //   hddt.Value = Convert.ToString(table);
+
+        //  Session["dt"] = table;
+        return table;
+    }
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        for (int i = 0; i < GridView1.VisibleRowCount; i++)
+        {
+            string s = GridView1.VisibleColumns[i].Caption;
+            
+            //  GridView1 control = FindRowCellTemplateControl(i, GridView1.Columns[0], "MyTemplateControlID");
+            //foreach (DataGridViewRow row in GridView1.Rows)
+            //{
+
+            //}
+            //Dim row As DataRow = gridView1.GetDataRow(i)
+
+          //  DataRow dr = GridView1.datacontrol
+            // TableCell cell = GridView1.rows;
+
+            //HtmlInputCheckBox checkBox = row.cell.Controls[1] as HtmlInputCheckBox;
+
+            //if (checkBox != null && checkBox.Checked)
+            //{
+
+            //    SqlDataSource1.UpdateParameters["DBS_ID"].DefaultValue = checkBox.Value;
+            //    SqlDataSource1.Update();
+
+            //}
+
+        }
+    }
+}

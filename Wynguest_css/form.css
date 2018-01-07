@@ -1,0 +1,231 @@
+@charset "utf-8";
+/* CSS Document */
+
+input.edit-submit{
+	border:0px;
+	background:url(../images/btn_bg.png) repeat-x left -1px;
+	margin:0px 0px 0px;
+	padding:8px 3px 16px 0px;
+	color:#fff;
+	font:bold 11px Arial, Helvetica, sans-serif;
+	cursor:pointer;
+	float:left;
+}
+
+input.edit-disabled{
+	background-color:#ece9d6;
+	border:1px solid #c6c6be;
+	color:#000;
+	font:normal 11px Arial, Helvetica, sans-serif;
+	padding:3px; 
+}
+
+@-moz-document input[type="button"]{
+	padding:0 0 3px 0;
+}
+
+label {
+font-family:Arial; font-size:12px; font-weight:normal; color:#333333; 
+}
+textarea{
+	background-color:#fff;
+	border: 1px solid #ccc;
+	color:#333;
+	font:normal 11px  Arial, Helvetica, sans-serif;
+	padding:3px;
+}
+textarea[disabled="disabled"]{
+	background-color:#ece9d6;
+	border:1px solid #c6c6be;
+	color:#333;
+	font:normal 11px Arial, Helvetica, sans-serif;
+	padding:1px 0 0 3px;
+}
+input[type="text"]{
+	background-color:#fff;
+	border: 1px solid #ccc;
+	color:#333;
+	font:normal 11px Arial, Helvetica, sans-serif;
+	padding:2px 2px 0 2px;
+}
+input[type="checkbox"]{
+	border:0;
+}
+input[type="image"]{
+	border:0;
+}
+input[type="radio"]{
+	border:0;
+}
+select{
+	background-color:#fff;
+	border:1px solid #ccc;
+	color:#333;
+	font:normal 11px Arial, Helvetica, sans-serif;
+	padding:3px;
+}
+select[disabled="disabled"]{
+	background-color:#ece9d6;
+	border:1px solid #c6c6be;
+	color:#333;
+	font:normal 11px Arial, Helvetica, sans-serif;
+	padding:1px 0;
+}
+
+fieldset ol {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset li {
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+}
+
+fieldset fieldset {
+  border: none;
+  margin: 3px 0 0;
+}
+
+fieldset fieldset legend {
+  padding: 0 0 5px;
+  font-weight: normal;
+}
+
+fieldset fieldset label {
+  display: block;
+  width: auto;
+}
+
+.forwardSlash {
+	font-size: 22px;
+	font-weight: bold;
+	color: #ccc;		
+}
+
+#stagingAlert {
+	padding: 5px;
+	background-color: #f2f2bc;
+	width:98%;	
+}
+
+.alert {
+  font-size: 11px;
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;	
+}
+.h5 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #1072ba;		
+}
+
+#h6 {
+	height: 20px;
+	width: inherit;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+	margin-top: 20px;	
+}
+
+.h6 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #4e8aa4;		
+}
+
+
+.subheads {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #184163;
+	font-size: 11px;
+	line-height:14px;
+	font-weight: bold;
+	font-style:normal;
+	text-decoration: none;
+}
+
+fieldset {
+  margin-bottom: 10px;
+  border: 0px;
+}
+
+legend {
+  padding: 0 2px;
+  font-weight: bold;
+}
+.blue_label{
+  font-size: 11px;
+  line-height: 13px;
+  vertical-align: middle;
+  color: #184163;
+  font-weight: bold;
+}
+.mandatory{
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
+.attach {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #188149;
+	line-height:14px;
+	font-style:normal;
+	font-size:11px;
+	text-decoration: underline;
+}
+.atach_item
+{
+    font-size:11px;
+    color:#000;
+    text-decoration:none;
+}
+.attach :hover {
+	color: #999999;
+	text-decoration: underline;
+}
+
+.jquery-roundedBtn{float:left;width:100%;}
+span.spanLt{background:url(../images/corners.png) no-repeat left -1px;width:13px;height:39px; float:left;}
+span.spanRt{background:url(../images/corners.png) no-repeat right -1px;width:15px;height:39px; float:left;}
+
+/*for edit button in gridview*/
+
+.Editjquery-roundedBtn{float:left;width:100%;}
+span.EditspanLt{background:url(../images/corners.png) no-repeat left -1px;width:13px;height:39px; float:left;}
+span.EditspanRt{background:url(../images/corners.png) no-repeat right -1px;width:15px;height:39px; float:left;}
+
+/* fakefileinput with jQuery */
+div.fileinputs {
+position:relative;
+}
+div.fakefile {
+z-index: 1;
+margin-top:-28px;
+}
+input.file {
+text-align: right;
+height:28px;
+-moz-opacity:0 ;
+filter:alpha(opacity: 0);
+opacity: 0;
+z-index: 2;
+position:relative;
+}
+.browse_btn{
+vertical-align:middle;
+}
+.fileInputWrapper{
+float:left;
+width:auto;
+padding:0;
+margin:30px 0;
+}
+.formField select{
+width:130px;
+}

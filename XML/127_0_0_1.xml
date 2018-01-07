@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pathinfo>
+  <path>
+    <frompage>
+    </frompage>
+    <landingpage>http://localhost:1732/OnlineTest/tracking.aspx</landingpage>
+    <landingtime>28-04-10 02:20:59</landingtime>
+  </path>
+  <pathinfo>
+    <frompage>
+    </frompage>
+    <landingpage>http://localhost:1732/OnlineTest/tracking.aspx</landingpage>
+    <landingtime>28-04-10 02:25:12</landingtime>
+  </pathinfo>
+  <pathinfo>
+    <frompage>http://localhost:1732/OnlineTest/tracking.aspx</frompage>
+    <landingpage>http://localhost:1732/OnlineTest/EditExpertProfile.aspx</landingpage>
+    <landingtime>28-04-10 02:25:36</landingtime>
+  </pathinfo>
+  <pathinfo>
+    <frompage>
+    </frompage>
+    <landingpage>http://localhost:1732/OnlineTest/tracking.aspx</landingpage>
+    <landingtime>28-04-10 02:26:26</landingtime>
+  </pathinfo>
+  <pathinfo>
+    <frompage>http://localhost:1732/OnlineTest/tracking.aspx</frompage>
+    <landingpage>http://localhost:1732/OnlineTest/EditExpertProfile.aspx</landingpage>
+    <landingtime>28-04-10 02:26:36</landingtime>
+  </pathinfo>
+</pathinfo>

@@ -1,0 +1,122 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CopyMultipleGridViewRowUsingCtrl.aspx.cs"
+    Inherits="dotnetspeaks.LiveDemos.ASP.NET.GridView.GridViewSelectUsingCheckBox" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body onunload="">
+    <form id="form1" runat="server">
+    <div>
+        <table>
+            <tr>
+                <td valign="top">
+                    <asp:GridView ID="gvDept" runat="server" AutoGenerateColumns="False" CellPadding="5"
+                        Font-Name="verdana" Font-Size="10pt" onselectstart="return false;" BorderStyle="Solid"
+                        OnRowDataBound="gvDept_RowDataBound" DataKeyNames="DepartmentId">
+                        <RowStyle BackColor="#99CCFF" />
+                        <Columns>
+                            <asp:BoundField DataField="DepartmentId" HeaderText="Department Id" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                            <asp:BoundField DataField="Name" HeaderText="Name" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                            <asp:BoundField DataField="GroupName" HeaderText="Group Name" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                            <asp:BoundField DataField="ModifiedDate" HeaderText="Modified Date" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                        </Columns>
+                        <HeaderStyle HorizontalAlign="Left" BackColor="#003366" ForeColor="#ffffff" Font-Bold="true"
+                            Font-Size=".75em" />
+                    </asp:GridView>
+                    <asp:HiddenField ID="hidCellId" runat="server" />
+                    <asp:HiddenField ID="hidSelectedRow" runat="server" />
+                    <asp:HiddenField ID="hidIsSelected" runat="server" />
+                </td>
+                <td valign="top">
+                    <asp:GridView ID="gvDestDept" runat="server" AutoGenerateColumns="False" CellPadding="5"
+                        Font-Name="verdana" Font-Size="10pt" onselectstart="return false;" BorderStyle="Solid">
+                        <RowStyle BackColor="#99CCFF" />
+                        <Columns>
+                            <asp:BoundField DataField="DepartmentId" HeaderText="Department Id" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                            <asp:BoundField DataField="Name" HeaderText="Name" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                            <asp:BoundField DataField="GroupName" HeaderText="Group Name" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                            <asp:BoundField DataField="ModifiedDate" HeaderText="Modified Date" ItemStyle-VerticalAlign="Top"
+                                ItemStyle-Width="120px" />
+                        </Columns>
+                        <HeaderStyle HorizontalAlign="Left" BackColor="#003366" ForeColor="#ffffff" Font-Bold="true"
+                            Font-Size=".75em" />
+                    </asp:GridView>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <asp:Button ID="btnCopy" runat="server" OnClientClick="return IsRowSelected();" Text="Copy"
+                        OnClick="btnCopy_Click" />
+                    <asp:Label ID="lbl" runat="server" Text="Ctrl + Click to select multiple rows." />
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>
+
+<script language="javascript" type="text/javascript">
+
+    function FillColor(cellid, id,evt) {
+        var isSelected = document.getElementById('<%=hidSelectedRow.ClientID%>');
+        if (!evt) var evt = window.event; 
+        ctrlPressed = evt.ctrlKey;
+        if (!ctrlPressed) {
+            var clearCellColor = document.getElementById('hidCellId').value.split(',');
+            for (i = 0; i < clearCellColor.length; i++) {
+                document.getElementById(clearCellColor[i]).bgColor = "#99CCFF";
+                document.getElementById(clearCellColor[i]).style.color = "Black";
+            }
+            isSelected.value = '';
+        }
+
+
+        var cellNo = cellid.split('_');
+        var selectcellNo;
+        var clearCellColor = document.getElementById('hidCellId').value.split(',');
+
+        if (document.getElementById('<%=hidIsSelected.ClientID%>').value != cellNo[1]) {
+            for (i = 0; i < clearCellColor.length; i++) {
+                selectcellNo = clearCellColor[i].split('_');
+                var objCell = document.getElementById(clearCellColor[i]);
+                if (cellNo[1] == selectcellNo[1]) {
+                    objCell.bgColor = "Maroon";
+                    objCell.style.color = "White";
+                    if (!isSelected.value.match(id)) {
+                        if (isSelected.value == '') {
+                            isSelected.value = id;
+                        }
+                        else {
+                            isSelected.value = isSelected.value + ',' + id;
+                        }
+                    }
+                }
+            }
+            document.getElementById('<%=hidIsSelected.ClientID%>').value = cellNo[1];
+        }
+        else {
+            document.getElementById('<%=hidIsSelected.ClientID%>').value = '';
+            isSelected.value = '';
+        }
+    }
+
+
+    function IsRowSelected() {
+        if (document.getElementById('<%=hidSelectedRow.ClientID%>').value == '') {
+            alert('Nothing to copy');
+            return false;
+        }
+    }
+
+</script>
+

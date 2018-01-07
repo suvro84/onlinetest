@@ -1,0 +1,1217 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RoomTypeMasterMaintenance.aspx.cs" Inherits="RoomTypeMasterMaintenance" %>
+<%@ Register Assembly="DevExpress.Web.ASPxGridView.v11.1, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.ASPxEditors.v11.1, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v11.1, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web.ASPxMenu" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.ASPxGridView.v11.1, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web.ASPxGridLookup" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.ASPxScheduler.v11.1, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web.ASPxScheduler" TagPrefix="dxwschs" %>
+<%@ Register Assembly="DevExpress.XtraScheduler.v11.1.Core, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.XtraScheduler" TagPrefix="cc1" %>
+<%@ Register Assembly="DevExpress.Web.ASPxScheduler.v11.1, Version=11.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web.ASPxScheduler.Controls" TagPrefix="dxwschsc" %>
+<%@ Register Assembly="DevExpress.Web.ASPxGridView.v11.1" Namespace="DevExpress.Web.ASPxGridView"
+    TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.ASPxEditors.v11.1" Namespace="DevExpress.Web.ASPxEditors"
+    TagPrefix="dx" %>
+<%@ Register assembly="DevExpress.Web.ASPxGridView.v10.2, Version=10.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxGridView" tagprefix="dx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ScriptManager runat="server">
+    </asp:ScriptManager>
+     <link rel="stylesheet" type="text/css" href="../CSS/styles.css" />
+     
+     
+   
+    <script type="text/javascript">
+
+        var currentRowId = 0;
+
+        function MarkRow(rowId) {
+            if (document.getElementById(rowId) == null)
+                return;
+
+            if (document.getElementById(currentRowId) != null) {
+                if (parseInt(currentRowId) % 2 == 0) {
+                    document.getElementById(currentRowId).style.backgroundColor = '#f0ffff';
+                }
+                else {
+                    document.getElementById(currentRowId).style.backgroundColor = '#e8f2fc';
+                }
+
+
+            }
+
+            //changing the grid color to default one..and the seleted row is seleted with blue color..
+
+            var count = parseInt(document.getElementById("ctl00_DefaultContent_hdTot").value);
+
+            for (var i = 0; i < count; i++) {
+                if (document.getElementById(i).style.backgroundColor.toString() == '#6999e3' || document.getElementById(i).style.backgroundColor.toString() == 'rgb(105, 153, 227)') {
+
+                    if (i % 2 == 0) {
+                        document.getElementById(i).style.backgroundColor = '#f0ffff';
+                    }
+                    else {
+                        document.getElementById(i).style.backgroundColor = '#e8f2fc';
+                    }
+
+
+                }
+
+            }
+
+            document.getElementById("ctl00_DefaultContent_hdcurrentRowId").value = rowId;
+
+
+            //checking gor true values and changing the color..  
+            // VisibleDelButton(rowId);
+            if (document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows.length > 0) {
+                for (var i = 1; i < document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows.length; i++) {
+                    if (document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[12].innerHTML.toString().indexOf('True') > -1) {
+
+                        document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].style.backgroundColor = '#afeeee';
+
+
+                    }
+                    if (document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[14].innerHTML.toString().indexOf('True') > -1) {
+                        //alert('found');
+                        document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[12].style.display = 'none';
+                        document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[13].style.display = 'none';
+                        document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[14].style.display = 'none';
+
+                    }
+
+                }
+            }
+
+
+            document.getElementById(rowId).style.backgroundColor = '#6999e3';
+
+
+
+
+
+            var table = document.getElementById("ctl00_DefaultContent_gvControlRoomType");
+
+
+            document.getElementById("ctl00_DefaultContent_txtDisplayOrder").value = table.rows[parseInt(rowId) + 1].cells[0].innerHTML.toString().trim();
+
+            document.getElementById("ctl00_DefaultContent_textRoomDesc").value = table.rows[parseInt(rowId) + 1].cells[3].innerHTML.toString().trim();
+            document.getElementById("ctl00_DefaultContent_txtMaxOccupancy").value = table.rows[parseInt(rowId) + 1].cells[9].innerHTML.toString().trim();
+
+            lookUpEditRoomClass.SetText = "";
+            lookUpEditRoomClass.SetText = table.rows[parseInt(rowId) + 1].cells[2].innerHTML.toString().trim();
+
+
+
+            document.getElementById("ctl00_DefaultContent_ddlExtraBed").value = table.rows[parseInt(rowId) + 1].cells[8].innerHTML.toString().trim();
+
+            document.getElementById("ctl00_DefaultContent_ddlDiscontinue").value = table.rows[parseInt(rowId) + 1].cells[4].innerHTML.toString().trim();
+
+            document.getElementById("ctl00_DefaultContent_ddlSmoking").value = table.rows[parseInt(rowId) + 1].cells[6].innerHTML.toString().trim();
+
+            document.getElementById("ctl00_DefaultContent_hdRoomType").value = table.rows[parseInt(rowId) + 1].cells[1].innerHTML.toString().trim();
+
+            if (table.rows[parseInt(rowId) + 1].cells[10].innerHTML.toString().trim() != "") {
+
+
+                document.getElementById("<%=ddlRoomCategoryNew.ClientID%>").value = table.rows[parseInt(rowId) + 1].cells[10].innerHTML.toString().trim();
+            }
+
+
+            document.getElementById("<%=txtRoomTypeName.ClientID%>").value = table.rows[parseInt(rowId) + 1].cells[11].innerHTML.toString().trim();
+
+            var rt = document.getElementById("ctl00_DefaultContent_hdRoomType").value.toString().trim();
+
+            var GetValue = new Array();
+            var data = document.getElementById("sp" + rt).innerHTML.toString().trim();
+
+            GetValue = data.split(",");
+
+            if (GetValue[0].toString() != "") {
+                document.getElementById("<%=ddlBedType1.ClientID%>").value = GetValue[0].toString().trim();
+            }
+            else {
+                document.getElementById("<%=ddlBedType1.ClientID%>").value = "King";
+            }
+            if (GetValue[1].toString() != "") {
+                document.getElementById("<%=ddlBedType2.ClientID%>").value = GetValue[1].toString().trim();
+            }
+            else {
+                document.getElementById("<%=ddlBedType2.ClientID%>").value = "King";
+            }
+
+            document.getElementById("<%=txtNoofBedType1.ClientID%>").value = GetValue[2].toString().trim();
+            document.getElementById("<%=txtNoofBedType2.ClientID%>").value = GetValue[3].toString().trim();
+            document.getElementById("<%=txtAdults.ClientID%>").value = GetValue[4].toString().trim();
+            document.getElementById("<%=txtChild.ClientID%>").value = GetValue[5].toString();
+            document.getElementById("<%=txtTotalHotelInventory.ClientID%>").value = GetValue[6].toString().trim();
+            document.getElementById("<%=txtNoOfroom.ClientID%>").value = GetValue[8].toString().trim();
+            VisibleDelButton(rowId);
+            // VisibleDelButton(rowId, GetValue[7].toString().trim());
+
+
+        }
+
+        function SelectRow() {
+            if (event.keyCode == 40)
+                MarkRow(currentRowId + 1);
+            else if (event.keyCode == 38)
+                MarkRow(currentRowId - 1);
+        }
+
+        function funGetValues(cellid, id, cellText) {
+            alert(cellText);
+        }
+        function ColorRows(index1, index2, type, flag) {
+
+
+            if (document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows.length > 0) {
+                for (var i = 1; i < document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows.length; i++) {
+                    if (document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[12].innerHTML.toString().indexOf('True') > -1) {
+                        document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].style.backgroundColor = '#afeeee';
+
+                    }
+
+
+
+                }
+            }
+            if (type == "dwn") {
+
+
+                if (flag == "False") {
+
+                    document.getElementById("ctl00_DefaultContent_hdFlag").value = "True";
+                    document.getElementById(index2).style.backgroundColor = '#6999e3';
+                    VisibleDelButton(index2);
+
+
+                }
+                else {
+
+                    document.getElementById(index1).style.backgroundColor = '#6999e3';
+                    VisibleDelButton(index1);
+                }
+
+
+
+            }
+            else {
+
+                if (flag == "False") {
+
+                    document.getElementById(index1).style.backgroundColor = '#6999e3';
+                    VisibleDelButton(index2);
+                }
+                else {
+
+                    document.getElementById(index1).style.backgroundColor = '#6999e3';
+                    VisibleDelButton(index1);
+                }
+            }
+        }
+
+        function VisibleDelButton(index) {
+
+            for (var i = 1; i < document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows.length; i++) {
+                if (document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[14].innerHTML.toString().indexOf('True') > -1) {
+
+
+                    document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[12].style.display = 'none';
+                    document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[13].style.display = 'none';
+                    document.getElementById("ctl00_DefaultContent_gvControlRoomType").rows[i].cells[14].style.display = 'none';
+                    document.getElementById("ctl00_DefaultContent_btnDeleteRoom").style.display = "block";
+                    //$("<%=ddlDiscontinue.ClientID %>").attr("disabled", "disabled");
+                    document.getElementById("<%=ddlDiscontinue.ClientID %>").disabled = true;
+
+                }
+                else {
+                    document.getElementById("<%=ddlDiscontinue.ClientID %>").disabled = false;
+                }
+            }
+
+
+            if (document.getElementById("ctl00_DefaultContent_txtDisplayOrder").value == "99") {
+                document.getElementById("ctl00_DefaultContent_txtDisplayOrder").disabled = true;
+                document.getElementById("ctl00_DefaultContent_ddlDiscontinue").disabled = true;
+            }
+            else {
+                document.getElementById("ctl00_DefaultContent_txtDisplayOrder").disabled = false;
+                document.getElementById("ctl00_DefaultContent_ddlDiscontinue").disabled = false;
+            }
+
+        }
+
+
+
+
+
+        function UpdateSessionList(control, type, datatype, ddl) {
+            //alert(ddl);
+            var value = null;
+            if (ddl != null) {
+                if (ddl == 'ddl') {
+                    //alert(control.options[control.selectedIndex].text);
+                    value = control.options[control.selectedIndex].text
+                }
+                else {
+                    value = lookUpEditRoomClass.GetValue();
+                }
+            }
+            else {
+                value = control.value;
+
+            }
+            // alert(value);
+            // var value = control.value;
+            var RoomType = $('#<%=hdRoomType.ClientID%>').val();
+            // alert(value);
+
+            var xmlHttpReq = false;
+            var self = this;
+            if (window.XMLHttpRequest) {
+                self.xmlHttpReq = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+                self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            self.xmlHttpReq.open('POST', "RoomTypeMasterMaintenanceAjaxSupport.aspx", true);
+            self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // self.xmlHttpReq.setRequestHeader('Content-Type', 'text/plain');
+            self.xmlHttpReq.onreadystatechange = function () {
+                if (self.xmlHttpReq.readyState == 4) {
+                    // document.getElementById("dvAjaxPic").style.display = "none";
+                    document.getElementById("dvRoomDesc").style.display = "none";
+                    //alert(self.xmlHttpReq.responseText);
+
+                    var GetValue = new Array();
+                    if (self.xmlHttpReq.responseText.indexOf('~' != -1)) {
+                        GetValue = self.xmlHttpReq.responseText.split("~");
+                        //alert(GetValue[0].toString());
+                        // alert(GetValue[1].toString());
+                    }
+                    if (GetValue[0].toString() != "") {
+                        if (GetValue[0].toString() == "1") {
+                            // window.location = "RoomTypeMasterMaintenance.aspx?flag=" + GetValue[1].toString();
+                            //window.location = "RoomTypeMasterMaintenance.aspx?flag=1";
+                            //alert(GetValue[1].toString());
+                        }
+                        else if (GetValue[0].toString() == "0") {
+
+                            // alert(GetValue[1].toString());
+                        }
+
+                    }
+                    else {
+                        // alert("Ajax return not found...");
+                    }
+                }
+                else {
+                    //document.getElementById("dvAjaxPic").style.display = "block";
+                    document.getElementById("dvRoomDesc").style.display = "block";
+
+
+                }
+            }
+            self.xmlHttpReq.send("mode=2" + "&value=" + value + "&type=" + type + "&RoomType=" + RoomType + "&datatype=" + datatype);
+        }
+
+    </script>
+    <script type="text/javascript" src="../Script/jquery.popupWindow.js"></script>
+    <script type="text/javascript">
+        function OpenPopUp() {
+            window.open('RoomTypeChannelDescription.aspx', 'mywindow', 'location=1,status=1,scrollbars=1, width=500,height=400');
+        }
+        $(document).ready(function () {
+
+
+            $("input#<% = txtTotalHotelInventory.ClientID %>").keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down 
+                    e.preventDefault();         // Prevent character input 
+                } else {
+                    var n = e.keyCode;
+                    if (!((n == 8)              // backspace 
+        || (n == 46)                // delete 
+        || (n >= 35 && n <= 40)     // arrow keys/home/end 
+        || (n >= 48 && n <= 57)     // numbers on keyboard 
+        || (n >= 96 && n <= 105))   // number on keypad 
+        ) {
+                        e.preventDefault();     // Prevent character input 
+                    }
+                }
+
+            });
+
+            $("input#<% = txtNoofBedType1.ClientID %>").keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down 
+                    e.preventDefault();         // Prevent character input 
+                } else {
+                    var n = e.keyCode;
+                    if (!((n == 8)              // backspace 
+        || (n == 46)                // delete 
+        || (n >= 35 && n <= 40)     // arrow keys/home/end 
+        || (n >= 48 && n <= 57)     // numbers on keyboard 
+        || (n >= 96 && n <= 105))   // number on keypad 
+        ) {
+                        e.preventDefault();     // Prevent character input 
+                    }
+                }
+
+            });
+
+            $("input#<% = txtNoofBedType2.ClientID %>").keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down 
+                    e.preventDefault();         // Prevent character input 
+                } else {
+                    var n = e.keyCode;
+                    if (!((n == 8)              // backspace 
+        || (n == 46)                // delete 
+        || (n >= 35 && n <= 40)     // arrow keys/home/end 
+        || (n >= 48 && n <= 57)     // numbers on keyboard 
+        || (n >= 96 && n <= 105))   // number on keypad 
+        ) {
+                        e.preventDefault();     // Prevent character input 
+                    }
+                }
+
+            });
+
+            $("input#<% = txtMaxOccupancy.ClientID %>").keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down 
+                    e.preventDefault();         // Prevent character input 
+                } else {
+                    var n = e.keyCode;
+                    if (!((n == 8)              // backspace 
+        || (n == 46)                // delete 
+        || (n >= 35 && n <= 40)     // arrow keys/home/end 
+        || (n >= 48 && n <= 57)     // numbers on keyboard 
+        || (n >= 96 && n <= 105))   // number on keypad 
+        ) {
+                        e.preventDefault();     // Prevent character input 
+                    }
+                }
+
+            });
+
+            $("input#<% = txtDisplayOrder.ClientID %>").keydown(function (e) {
+                if (e.shiftKey || e.ctrlKey || e.altKey) { // if shift, ctrl or alt keys held down 
+                    e.preventDefault();         // Prevent character input 
+                } else {
+                    var n = e.keyCode;
+                    if (!((n == 8)              // backspace 
+        || (n == 46)                // delete 
+        || (n >= 35 && n <= 40)     // arrow keys/home/end 
+        || (n >= 48 && n <= 57)     // numbers on keyboard 
+        || (n >= 96 && n <= 105))   // number on keypad 
+        ) {
+                        e.preventDefault();     // Prevent character input 
+                    }
+                }
+
+            });
+        });
+    </script>
+    <style type="text/css">
+        .bClose
+        {
+            cursor: pointer;
+            color: White;
+            font-weight: bold;
+            font-size: 12px;
+            position: absolute;
+            right: 0px;
+            text-decoration: none;
+            top: 5px;
+        }
+        
+        #div_to_popup iframe
+        {
+            position: absolute;
+            top: 20px;
+            left: 5px;
+            width: 100%;
+            height: 95%;
+            overflow: hidden;
+            border: none;
+        }
+        
+        #div_to_popup
+        {
+            display: none;
+            height: 90%;
+            padding: 15px;
+            width: 90%;
+        }
+        .conferm
+
+        {
+
+            background-color: #EEEEEE;
+
+            border: 1px solid #DDDDDD;
+
+            display: block;
+
+            left: 40%;
+
+            position: absolute;
+
+            top: 50%;
+
+            width: 500px;
+
+            height: 90px;
+
+            z-index: 999;
+
+        }
+    </style>
+    <script type="text/javascript">
+
+        function ClosebPopup() {
+            $("#div_to_popup").bPopup().close();
+        }
+
+
+        function ColorFirstRow() {
+            document.getElementById('0').style.backgroundColor = '#6999e3'
+        }
+       
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="RateMaintenance">
+        <div id="topHorizontalMenu">
+            <ul>
+                <li>
+                    <asp:ImageButton ID="ibtnMenuSearch" alt="Save" Width="16px" Height="11px" ImageUrl="../Image/search.gif"
+                        runat="server" OnClick="ibtnMenuSearch_Click" />Search </li>
+                <li><a title="Save" href="#">
+                    <asp:ImageButton ID="ibtnSave" alt="Save" Width="16px" Height="11px" ImageUrl="../Image/save.gif"
+                        runat="server" OnClick="ibtnSave_Click" />
+                    Save </a></li>
+                <li>
+                    <asp:ImageButton ID="ibtnReset" alt="Save" Width="11" Height="11" ImageUrl="../Image/new.gif"
+                        runat="server" OnClick="ibtnReset_Click" />Reset </li>
+            </ul>
+        </div>
+        <!--  Jquery validation-->
+        <div class="container" id="main" style="display: none;">
+            <ul id="holder" class="paging">
+            </ul>
+        </div>
+        <!-- Jquery validation -->
+        <asp:UpdateProgress ID="UpdateProgress1" runat="server">
+            <ProgressTemplate>
+                <img alt="" title="" src="../Image/loading.gif" /> 
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+            <ContentTemplate>
+                <div id="dvAjaxPic" style="display: none">
+                    <img alt="" title="" src="../Image/loading.gif" />
+                </div>
+                <div id="contentWrapper1" runat="server">
+                    <div>
+                        <table border="0" cellspacing="0" cellpadding="0" class="contentTable">
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Room Type :
+                                </td>
+                                <td width="10">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                     <dx:ASPxGridLookup ID="lookUpEditRoomType" ClientInstanceName="lookUpEditRoomType"
+                                        runat="server" KeyFieldName="RoomType" MultiTextSeparator=", " SelectionMode="Multiple"
+                                        TextFormatString="{0}" Width="100px" AutoGenerateColumns="False" ClientIDMode="AutoID"
+                                        IncrementalFilteringMode="Contains">
+                                        <Columns>
+                                            <dx:GridViewCommandColumn ShowSelectCheckbox="true" />
+                                            <dx:GridViewDataColumn FieldName="RoomType" />
+                                            <dx:GridViewDataColumn FieldName="SoftHotelInd" />
+                                            <dx:GridViewDataColumn FieldName="RoomDesc">
+                                                <Settings AllowAutoFilter="False"></Settings>
+                                            </dx:GridViewDataColumn>
+                                        </Columns>
+                                    </dx:ASPxGridLookup>
+                                    <%--    <dx:ASPxComboBox ID="lookUpEditRoomType" ClientInstanceName="lookUpEditRoomType" runat="server" Width="170px" DropDownWidth="550"
+        DropDownStyle="DropDownList"  ValueField="RoomType"
+        ValueType="System.String" TextFormatString="{0}" EnableCallbackMode="true" IncrementalFilteringMode="StartsWith"
+        CallbackPageSize="30">
+        <Columns>
+            <dx:ListBoxColumn FieldName="RoomType" Width="130px" />
+            <dx:ListBoxColumn FieldName="SoftHotelInd" Width="100%" />
+            <dx:ListBoxColumn FieldName="RoomDesc" Width="70px" />
+           
+        </Columns>
+
+    </dx:ASPxComboBox>--%>
+                                    <%--<dx:ASPxDropDownEdit ID="lookUpEditRoomType" runat="server" ClientInstanceName="lookUpEditRoomType"
+                                        Width="170px" AllowUserInput="False" EnableAnimation="False" IncrementalFilteringMode="Contains">
+                                        <DropDownWindowStyle>
+                                            <Border BorderWidth="0px" />
+                                        </DropDownWindowStyle>
+                                        <DropDownWindowTemplate>
+                                            <dx:ASPxGridView ID="gvRoomType" runat="server" AutoGenerateColumns="False" ClientInstanceName="GridView"
+                                                Width="500px" KeyFieldName="RoomType">
+                                                <SettingsBehavior ConfirmDelete="True" EnableRowHotTrack="True" AllowFocusedRow="True" />
+                                                <Columns>
+                                                    <dx:GridViewCommandColumn ShowSelectCheckbox="true" />
+                                                    <dx:GridViewDataTextColumn FieldName="RoomType" VisibleIndex="0" Visible="True">
+                                                    </dx:GridViewDataTextColumn>
+                                                    <dx:GridViewDataTextColumn FieldName="SoftHotelInd" VisibleIndex="0">
+                                                    </dx:GridViewDataTextColumn>
+                                                    <dx:GridViewDataTextColumn FieldName="RoomDesc" VisibleIndex="0">
+                                                    </dx:GridViewDataTextColumn>
+                                                </Columns>
+                                                <SettingsPager Mode="ShowAllRecords">
+                                                </SettingsPager>
+                                                <Settings ShowVerticalScrollBar="True" />
+                                            </dx:ASPxGridView>
+                                        </DropDownWindowTemplate>
+                                    </dx:ASPxDropDownEdit>--%>
+                                </td>
+                                <td width="10">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <asp:ImageButton ID="ibtnSearch" alt="add info icon" Width="16" Height="16" ImageUrl="../Image/ico-add-info.gif"
+                                        runat="server" OnClick="ibtnSearch_Click" />
+                                </td>
+                                <td align="right">
+                                    Total rooms in hotel :
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblTotalRoom" runat="server"></asp:Label>
+                                </td>
+                                <td align="right">
+                                    No. of associated room type :
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblAssoRoom" runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="sectionHeader">
+                        Room List
+                        <asp:ImageButton ID="ibtnUp" runat="server" ImageUrl="../image/ico-up-arrow.gif"
+                            OnClick="ibtnUp_Click" />
+                        <asp:ImageButton ID="ibtnDown" runat="server" ImageUrl="../image/ico-down-arrow.gif"
+                            OnClick="ibtnDown_Click" />
+                        <asp:ImageButton ID="btnDeleteRoom" Style="display: none" runat="server" ImageUrl="../image/btnDeleteRoom.BackgroundImage.bmp"
+                            OnClick="btnDeleteRoom_Click" />
+                    </div>
+                    <div class="dataTable1Holder">
+                        <div class="dataTable1Wrapper">
+                            <asp:GridView ID="gvControlRoomType" CssClass="dataTable1" AutoGenerateColumns="false"
+                                Width="100%" DataKeyNames="RoomType" runat="server" OnRowDataBound="gvControlRoomType_RowDataBound">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="DisplayOrder">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltDisplayOrder" Text='<%#Eval("DisplayOrder")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="RoomType">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltRoomType" Text='<%#Eval("RoomType")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="RoomClass">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltRoomClassCode" Text='<%#Eval("RoomClassCode")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="RoomDesc">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltRoomDesc" Text='<%#Eval("RoomDesc")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Discontinue">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltDiscontinue" Text='<%#Eval("Discontinue")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Generic">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltGeneric" Text='<%#Eval("Generic")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Smoking">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltSmoking" Text='<%#Eval("Smoking")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Type">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltType" Text='<%#Eval("Type")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="ExtraBed">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltExtraBed" Text='<%#Eval("ExtraBed")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="MaxOccupancy">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltMaxOccupancy" Text='<%#Eval("MaxOccupancy")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="RoomCategory">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltRoomCategoryNew" Text='<%#Eval("RoomCategoryNew")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="RoomType">
+                                        <ItemTemplate>
+                                            <asp:Literal ID="ltRoomTypeName" Text='<%#Eval("RoomTypeName")%>' runat="server"></asp:Literal>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ibAmmenities" ImageUrl="~/Image/gds.gif" Width="16" Height="16"
+                                                runat="server" OnClick="ibAmmenities_Click"></asp:ImageButton>
+                                            <span id="spIsDataNeedsToSave" style="display: none">
+                                                <%#Eval("IsDataNeedsToSave")%></span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ibRoomTypeChannelDescription" ImageUrl="~/Image/srp2.gif" Width="16"
+                                                Height="16" runat="server" OnClick="ibRoomTypeChannelDescription_Click"></asp:ImageButton>
+                                            <span id="sp<%#Eval("RoomType")%>" style="display: none">
+                                                <%#Eval("BedType1")%>,<%#Eval("BedType2")%>,<%#Eval("NoBedType1")%>,<%#Eval("NoBedType2")%>,<%#Eval("Adults")%>,<%#Eval("Children")%>,<%#Eval("TotalHotelInventory")%>,<%#Eval("DelButtonFlag")%>,<%#Eval("RoomCnt")%></span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="ibtnRoomTypeSRP" ImageUrl="~/Image/srp2.gif" Width="16" Height="16"
+                                                runat="server" OnClick="ibtnRoomTypeSRP_Click"></asp:ImageButton>
+                                            <span id="spDelButtonFlag" style="display: none">
+                                                <%#Eval("DelButtonFlag")%></span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                    </div>
+                    <div>
+                        <table border="0" cellspacing="0" cellpadding="0" class="contentTable">
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Description
+                                </td>
+                                <td width="10">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield" maxlength="26" onblur="UpdateSessionList(this,'RoomDesc','string');"
+                                        onchange="UpdateSessionList(this,'RoomDesc','string');" type="text" id="textRoomDesc"
+                                        runat="server" style="width: 210px;" value="" />
+                                    <div id="dvRoomDesc" style="display: none">
+                                        <img alt="" title="" src="../Image/loading.gif" />
+                                    </div>
+                                </td>
+                                <td width="21">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Max Occupancy :
+                                </td>
+                                <td width="10">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield10" maxlength="2" type="text" id="txtMaxOccupancy" onblur="UpdateSessionList(this,'MaxOccupancy','int');"
+                                        onchange="UpdateSessionList(this,'MaxOccupancy','int');" runat="server" style="width: 100px;"
+                                        value="" />
+                                </td>
+                                <td width="21">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Room Class :
+                                </td>
+                                <td width="10">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <dx:ASPxComboBox ID="lookUpEditRoomClass" ClientInstanceName="lookUpEditRoomClass"
+                                        runat="server" Width="170px" ValueField="RoomClassCode" TextFormatString="{0}"
+                                        EnableSynchronization="False" ValueType="System.String">
+                                        <ClientSideEvents TextChanged="function(s, e) {
+	
+    UpdateSessionList(this,'RoomClassCode','string','lookup');
+}"></ClientSideEvents>
+                                        <Columns>
+                                            <dx:ListBoxColumn FieldName="RoomClassCode" />
+                                            <dx:ListBoxColumn FieldName="Description" />
+                                        </Columns>
+                                        <ClientSideEvents SelectedIndexChanged="function(s, e) {
+                                
+	
+}" />
+                                    </dx:ASPxComboBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Extra Bed Indicator :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlExtraBed" onchange="UpdateSessionList(this,'ExtraBed','string','ddl');"
+                                        onblur="UpdateSessionList(this,'ExtraBed','string','ddl');" Style="width: 60px;"
+                                        runat="server">
+                                        <asp:ListItem Value="Y">Y</asp:ListItem>
+                                        <asp:ListItem Value="N">N</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Discontinue :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlDiscontinue" onblur="UpdateSessionList(this,'Discontinue','string','ddl');"
+                                        onchange="UpdateSessionList(this,'Discontinue','string','ddl');" Style="width: 60px;"
+                                        runat="server">
+                                        <asp:ListItem Value="Y">Y</asp:ListItem>
+                                        <asp:ListItem Value="N">N</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;Room Category
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                    <asp:DropDownList ID="ddlRoomCategoryNew" onblur="UpdateSessionList(this,'RoomCategoryNew','string','ddl');"
+                                        onchange="UpdateSessionList(this,'RoomCategoryNew','string','ddl');" Style="width: 100px;"
+                                        runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Smoking Indicator :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlSmoking" onchange="UpdateSessionList(this,'Smoking','string','ddl');"
+                                        Style="width: 60px;" runat="server">
+                                        <asp:ListItem Value="Y">Y</asp:ListItem>
+                                        <asp:ListItem Value="N">N</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Display Order :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield12" maxlength="2" type="text" id="txtDisplayOrder" onblur="UpdateSessionList(this,'DisplayOrder','int');"
+                                        onchange="UpdateSessionList(this,'DisplayOrder','int');" runat="server" style="width: 100px;"
+                                        value="" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp; Adults:
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                    <input name="textfield" type="text" id="txtAdults" onchange="UpdateSessionList(this,'Adults','string');"
+                                        onblur="UpdateSessionList(this,'Adults','string');" runat="server" value="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Bed Type 1 :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlBedType1" onchange="UpdateSessionList(this,'BedType1','string','ddl');"
+                                        Style="width: 100px;" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Bed Type 2 :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="ddlBedType2" onchange="UpdateSessionList(this,'BedType2','string','ddl');"
+                                        Style="width: 100px;" runat="server">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    No of Bed Type 1 :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield10" type="text" onchange="UpdateSessionList(this,'NoBedType1','string');"
+                                        onblur="UpdateSessionList(this,'NoBedType1','string');" id="txtNoofBedType1"
+                                        runat="server" style="width: 100px;" value="" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    No of Bed Type 2 :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield10" type="text" id="txtNoofBedType2" onchange="UpdateSessionList(this,'NoBedType2','string');"
+                                        runat="server" style="width: 100px;" value="" />
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    &nbsp; Child
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                    <input name="textfield10" type="text" id="txtChild" onchange="UpdateSessionList(this,'Children','string');"
+                                        runat="server" style="width: 100px;" value="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Room Type Name :
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield10" type="text" id="txtRoomTypeName" onchange="UpdateSessionList(this,'RoomTypeName','string');"
+                                        onblur="UpdateSessionList(this,'RoomTypeName','string');" runat="server" style="width: 100px;"
+                                        value="" />
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    Total Hotel Inventory:
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input name="textfield10" type="text" id="txtTotalHotelInventory" onchange="UpdateSessionList(this,'TotalHotelInventory','string');"
+                                        runat="server" style="width: 100px;" value="" />
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    &nbsp; Room count
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                    <input name="textfield10" disabled="disabled" type="text" id="txtNoOfroom" runat="server"
+                                        style="width: 100px;" value="" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="height: 30px;">
+                        <input id="hdcurrentRowId" type="hidden" value="0" runat="server" />
+                        <input id="hdTot" type="hidden" value="" runat="server" />
+                        <input id="hdmaxVal" type="hidden" value="" runat="server" />
+                        <input id="hdFlag" type="hidden" value="False" runat="server" />
+                        <input id="hdCurrentRoomTypeSelectionList" type="hidden" value="" runat="server" />
+                        <input id="hdRoomType" type="hidden" value="" runat="server" />
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
+                    function EndRequestHandler(sender, args) {
+                        //ColorFirstRow();
+
+                    }     
+                </script>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <div style="clear: both">
+        </div>
+        <div id="div_to_popup" runat="server" clientidmode="static" style="height: 400px;
+            width: 900px;">
+            <a class="bClose">X Close</a>
+            <div id="pContent">
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {margin:0px; padding:0px;background:url(../images/bkgd-login.png) repeat-x top left; background-color:#72b0c4; font-family:Arial; font-size:11px; font-weight:normal; color:#333333; }
+h1, h2, h3, h4, h5, h6, img, ul, li, p { margin:0px; padding:0px; list-style:none; outline:none; border:0; text-decoration:none;}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #333333;
+	line-height:14px;
+	text-align: left;
+}
+
+a {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #1072ba;
+	line-height:14px;
+	font-weight: bold;
+	font-style:normal;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #1072ba;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+/* Main wrapper */
+#main-wrapper {
+	width: 95%;
+	min-width: 780px;
+	width: 780px;
+	margin: 0 auto;
+}
+
+#main-content {
+	height: 680px;
+}
+
+#login {
+	background-image: url(../images/login-panel.png);
+	background-repeat: no-repeat;
+	background-position: top center;
+	height:534px;
+}
+
+#login-content {
+	padding-top: 212px;
+	height: auto;
+}
+
+.title {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	font-weight: bold;
+	text-align:center;
+	color:#184163;
+	padding-bottom: 14px;				
+}
+
+#login-forms {
+	max-width: 400px;/*it will support all browser except IE6*/
+	width: 400px; /*it will support all browser*/
+	margin: 0 auto;		
+}
+#login-forms .loginlabel{
+  font-size: 11px;
+  line-height: 13px;
+  vertical-align: middle;
+  color: #184163;
+  font-weight: bold;
+  width:65px !important;
+  display:inline-block;
+}
+#login-button {
+	max-width: 100px; /*it will support all browser except IE6*/
+	width: 100px;/*it will support all browser*/
+	height:25px;
+	margin:0 190px 0 0;
+	_margin:0 200px 0 0;
+	float:right;
+	display:inline;	
+}
+
+#login-links {
+	max-width: 310px;/*it will support all browser except IE6*/
+	width: 310px;/*it will support all browser*/
+	margin-left:auto;			
+	margin-right:auto;
+	margin-top:20px;
+}
+
+
+.form-text-field-login {
+	font-family: Arial, Helvetica, sans-serif;
+	width:250px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: left;
+	color:#184163;
+	height: 25px;
+	border: 1px solid #ccc;
+	background-color: #fff;	
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+
+.login-links a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: left;
+	color: #184163;
+	text-align:center;
+}
+
+.login-links a:hover {
+	color: #1072ba;
+	text-decoration: underline;
+}
+#login-forms span{
+font-weight:bold;
+margin-left:5px;
+}
+.disp_content{
+float:left;
+width:400px;
+font-size:12px;
+margin:5px 0 10px 210px;
+color:#FF0000;
+}

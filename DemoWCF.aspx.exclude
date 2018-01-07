@@ -1,0 +1,47 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DemoWCF.aspx.cs" Inherits="DemoWCF" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <Services>
+            <asp:ServiceReference Path="~/TestWcfService.svc" />
+        </Services>
+    </asp:ScriptManager>
+    <asp:UpdatePanel ID="UP1" runat="server">
+        <ContentTemplate>
+            Call from Code-Behind:<br />
+            <asp:TextBox ID="fld_String" runat="server" /><br />
+            <asp:Button ID="btn_Submit" runat="server" Text="Submit" OnClick="btn_Submit_Click" /><br />
+            <asp:Literal ID="lit_Display" runat="server" />
+            <br />
+            <br />
+            <asp:Button ID="btnAdd" runat="server" Text="Save" OnClick="btnAdd_Click" />
+            <asp:Button ID="btnGetDataArray" runat="server" Text="Get Data using Array" OnClick="btnGetDataArray_Click" />
+            <asp:Button ID="btnGetDataList" runat="server" Text="Get Data using List" OnClick="btnGetDataList_Click" />
+            <asp:Label ID="lblEmpNo" runat="server" Text="No. of Employees: "></asp:Label>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    Call from JavaScript:
+    <br />
+    <input type="text" id="jsString" /><br />
+    <input type="button" name="jsSubmit" value="Submit" onclick="DisplayName()" /><br />
+    </form>
+</body>
+</html>
+
+<script language="javascript" type="text/javascript">
+    function DisplayName() {
+        alert(TestWcfService);
+        TestWcfService.HelloJS(document.getElementById('jsString').value, onSuccess);
+    }
+
+    function onSuccess(string) {
+        alert(string);
+    }
+</script>
+

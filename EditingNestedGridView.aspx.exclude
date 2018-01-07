@@ -1,0 +1,155 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EditingNestedGridView.aspx.cs"
+    Inherits="dotnetspeaks.LiveDemos.ASP.NET.GridView.EditingNestedGridView" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <style type="text/css">
+        .modalBackground
+        {
+            background-color: Gray;
+            filter: alpha(opacity=80);
+            opacity: 0.5;
+        }
+        .ModalWindow
+        {
+            border: solid1px#c0c0c0;
+            background: #f0f0f0;
+            padding: 0px10px10px10px;
+            position: absolute;
+            top: -1000px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+    </asp:ScriptManager>
+    <div>
+        <asp:UpdatePanel runat="server" ID="updTest" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:GridView ID="gvParent" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvParent_RowDataBound"
+                    CellPadding="4" ForeColor="#333333" ShowHeader="True" DataKeyNames="EmployeeId">
+                    <Columns>
+                        <asp:TemplateField ItemStyle-Width="20px">
+                            <ItemTemplate>
+                                <asp:Image runat="server" ID="img1" ImageUrl="images/Collapse.GIF" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField HeaderText="Employee Id" DataField="EmployeeId">
+                            <ItemStyle HorizontalAlign="Center" Width="160px" />
+                        </asp:BoundField>
+                        <asp:BoundField HeaderText="Employee Name" DataField="EmployeeName">
+                            <ItemStyle HorizontalAlign="Center" Width="160px" />
+                        </asp:BoundField>
+                        <asp:BoundField HeaderText="Designation" DataField="Designation">
+                            <ItemStyle HorizontalAlign="Center" Width="160px" />
+                        </asp:BoundField>
+                        <asp:TemplateField HeaderText="Location">
+                            <ItemTemplate>
+                                <asp:Label ID="lblEmpName" runat="server" Text='<%# Eval("Location")%>'></asp:Label>
+                                <asp:Literal runat="server" ID="lit1" Text="</td><tr id='trCollapseGrid' style='display:none' ><td colspan='5'>" />
+                                <asp:GridView ID="gvChild" AutoGenerateColumns="False" runat="server" EnableViewState="False"
+                                    DataKeyNames="EmployeeId" ForeColor="#333333" PageSize="2" AllowPaging="True"
+                                    OnPageIndexChanging="gvChild_PageIndexChanging" OnRowCancelingEdit="gvChild_RowCancelingEdit"
+                                    OnRowDeleting="gvChild_RowDeleting" OnRowEditing="gvChild_RowEditing" OnRowUpdating="gvChild_RowUpdating">
+                                    <RowStyle BackColor="#EFF3FB" />
+                                    <AlternatingRowStyle BackColor="White" />
+                                    <Columns>
+                                        <asp:BoundField HeaderText="Skill ID" DataField="SkillID" ReadOnly="True">
+                                            <ItemStyle HorizontalAlign="Center" Width="80px" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Employee Id" DataField="EmployeeId" ReadOnly="True">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px" />
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="SkillSet">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px" />
+                                            <ItemTemplate>
+                                                <%# Eval("SkillSet")%>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtEditSkillSet" runat="server" Text=' <%# Eval("SkillSet")%>' Width="100px"></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Remarks">
+                                            <ItemStyle HorizontalAlign="Center" Width="100px" />
+                                            <ItemTemplate>
+                                                <%# Eval("Remarks")%>
+                                            </ItemTemplate>
+                                            <EditItemTemplate>
+                                                <asp:TextBox ID="txtEditRemarks" runat="server" Text=' <%# Eval("Remarks")%>' Width="100px"></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:CommandField ButtonType="Button" EditText="Edit" HeaderText="Edit" ShowEditButton="true" />
+                                        <asp:CommandField ButtonType="Button" DeleteText="Delete" HeaderText="Delete" ShowDeleteButton="true" />
+                                    </Columns>
+                                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                </asp:GridView>
+                                <asp:Literal runat="server" ID="lit2" Text="</td></tr>" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <RowStyle BackColor="#EFF3FB" />
+                    <AlternatingRowStyle BackColor="White" />
+                </asp:GridView>
+                <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender1" runat="server" TargetControlID="hidProcessing"
+                    PopupControlID="panEdit" BackgroundCssClass="modalBackground" PopupDragHandleControlID="panEdit">
+                </ajaxToolkit:ModalPopupExtender>
+                <asp:Panel ID="panEdit" runat="server" CssClass="ModalWindow">
+                    <div style="background-color: White">
+                        <img src="images/processing.gif" alt="Processing" />
+                        Loading......
+                    </div>
+                </asp:Panel>
+                <asp:HiddenField ID="hidProcessing" runat="server" />
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="btnExpandRow" EventName="Click" />
+            </Triggers>
+        </asp:UpdatePanel>
+        <asp:Button ID="btnExpandRow" runat="server" OnClick="btnExpandRow_Click" Style="display: none" />
+        <asp:HiddenField ID="hidRowId" runat="server" />
+        <asp:HiddenField ID="hidImgId" runat="server" />
+        <asp:HiddenField ID="hidRowIndex" runat="server" />
+    </div>
+    </form>
+</body>
+</html>
+
+<script language="javascript" type="text/javascript">
+    function OpenTable(trRow, imgId, ID) {
+        document.getElementById('<%=hidRowIndex.ClientID %>').value = ID;
+        document.getElementById('<%=hidRowId.ClientID %>').value = trRow;
+        document.getElementById('<%=hidImgId.ClientID %>').value = imgId;
+        __doPostBack("<%=btnExpandRow.ClientID%>", "");
+
+    }
+   
+</script>
+
+<script language="javascript" type="text/javascript">
+
+
+
+    // Reference of PageRequestManager.
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+
+    prm.add_initializeRequest(InitializeRequest);
+    prm.add_endRequest(EndRequest);
+
+    // Async postback starts.
+    function InitializeRequest(sender, args) {
+        var modalPopupBehavior = $find('<%=ModalPopupExtender1.ClientID %>');
+        modalPopupBehavior.show();
+    }
+
+    // Async postback ends.
+    function EndRequest(sender, args) {
+        var modalPopupBehavior = $find('<%=ModalPopupExtender1.ClientID %>');
+        modalPopupBehavior.hide();
+    }
+    
+</script>
+

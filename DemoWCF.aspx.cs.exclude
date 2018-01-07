@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ServiceReference1;
+
+public partial class DemoWCF : System.Web.UI.Page
+{
+    TestWcfService objService = new TestWcfService();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    protected void btn_Submit_Click(object sender, EventArgs e)
+    {
+
+        lit_Display.Text = objService.Hello(fld_String.Text);
+        //lit_Display.Text = TestWcfService.Hello(fld_String.Text);
+        
+    }
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+       // ServiceReference 
+        EmployeeServiceClient empClient = new EmployeeServiceClient("WSHttpBinding_IEmployeeService");
+       
+        Employee objEmp = new Employee();
+        Random rnd = new Random();
+        int intRnd = rnd.Next();
+        objEmp.EmpId = intRnd;
+        objEmp.FirstName = "ABC" + intRnd.ToString();
+        objEmp.LastName = "XYZ" + intRnd.ToString();
+        objEmp.Address = "Add" + intRnd.ToString();
+        objEmp.Designation = "S/W Engg";
+        objEmp.Age = 21;
+        empClient.SaveEmployee(objEmp);
+    }
+    protected void btnGetDataArray_Click(object sender, EventArgs e)
+    {
+        EmployeeServiceClient empClient = new EmployeeServiceClient("WSHttpBinding_IEmployeeService");
+        List<Employee> lstEmp = empClient.GetEmployees();
+        lblEmpNo.Text = Convert.ToString(lstEmp.Count);
+    }
+    protected void btnGetDataList_Click(object sender, EventArgs e)
+    {
+        //EmployeeServiceClient empClient = new EmployeeServiceClient("WSHttpBinding_IEmployeeService");
+        //List<Employee> lstEmp = empClient.getarr();
+        //lblEmpNo.Text = lstEmp.Count;
+    }
+}

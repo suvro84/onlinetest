@@ -1,0 +1,461 @@
+/* CSS Document */
+/*----------------General Part Start------------*/
+*{
+	padding:0; margin:0}
+body{
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#767676}
+
+ul{
+	list-style:none}
+a{
+	outline:none}
+img{
+	border:none}
+.clear{
+	font-size:0; line-height:0; clear:both}
+	
+/*----------------General Part End------------*/
+/*-------------Header Start------------*/
+.header{
+	background:url(../images/headerBg.jpg) repeat 0 0;
+	height:139px}
+.logo{
+	width:442px; height:77px; margin:31px 0 0 63px}
+.logo img{
+	width:442px; height:77px;}
+/*-------------Header End------------*/
+/*-----------Body Part Start----------*/
+.shadowBGtop{
+	background:url(../images/shadowBGtop.gif) repeat-x 0 0 #DBF3FD}
+.shadowBGtop1{
+	background:url(../images/shadowBGtop1.gif) repeat-x 0 0 #fff;
+	 height:7px}
+.leftCornerBg{
+	background:url(../images/lcornerBg.gif) no-repeat 0 0;
+	width:4px; height:7px}
+.rightCornerBg{
+	background:url(../images/rcornerBg.gif) no-repeat 0 0;
+	width:4px; height:7px}
+.leftBg{
+	background:url(../images/lshadowBg.gif) repeat-y 0 0}
+.rightBg{
+	background:url(../images/rshadowBg.gif) repeat-y 0 0}
+.tablePadd{
+	padding:38px 0}
+.leftBorder{
+	border-left:1px solid #E0E0E0;
+	padding:0 14px 0 27px}
+
+/*----------------Left Menu start----------*/
+.arrowlistmenu{
+	width:180px; margin:0 0 0 14px}
+.arrowlistmenu .menuheader{ /*CSS class for menu headers in general (expanding or not!)*/
+	font:bold 12px/17px Verdana, Arial, Helvetica, sans-serif;
+	color:#13465B;
+	background:url(../images/leftMenuBg.gif) no-repeat 0 0;
+	padding: 4px 0 7px 30px; /*header text is indented 30px*/
+	cursor: hand; cursor: pointer}
+.arrowlistmenu .openheader{ /*CSS class to apply to expandable header when it's expanded*/
+	background:url(../images/leftMenuBg_o.gif) no-repeat 0 0;
+	color:#C96414}
+.arrowlistmenu ul.categoryitems{ /*CSS for UL of each sub menu*/
+	background:#FCFAFA; margin-bottom:8px} /*bottom spacing between each UL and rest of content*/
+.arrowlistmenu ul.categoryitems li{
+	padding:0 0 2px 2px;} /*bottom spacing between menu items*/
+.arrowlistmenu ul.categoryitems li a{
+	font:normal 11px/17px Verdana, Arial, Helvetica, sans-serif;
+	color:#466574;
+	display: block;
+	padding:2px 0;
+	text-decoration: none;
+	border-bottom: 1px solid #E0E0E0}
+.arrowlistmenu ul.categoryitems li a:hover{ /*hover state CSS*/
+	color:#CC2802}
+	
+/*----------------Left Menu End----------*/	
+/*------------Personal Details Start----------*/
+.personalHead{
+	margin:0 0 33px 0}
+.labelField{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	position:relative; padding:0 0 0 34px; float:left; margin:0 0 22px 0}
+.nameWidth{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#02374E; width:139px; float:left}
+.star{
+	position:absolute; left:163px; top:0;
+	color:#DB0101;}
+.nameField{
+	border:1px solid #ECECEC;
+	background:url(../images/textFieldbg.gif) repeat-x 0 0;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#6E6F6F;	width:249px; height:18px; float:left;
+	padding:2px}
+.loadImage{
+	position:absolute; left:435px; top:0; float:left;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:24px; width:187px}
+.loadImage img{
+	width:16px; height:16px; margin:3px 2px 0 0}
+.passwordTxt{
+	position:absolute; left:435px; top:0; float:left;
+	font:normal 12px/22px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:24px; width:187px}
+.submitBtn{
+	background:url(../images/submitBtn.jpg) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	margin:0 0 0 134px; padding:0 0 2px 0; cursor:pointer}
+.loadImage2{
+	position:absolute; left:582px; top:0; float:left;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:24px; width:187px}
+.formInfo{
+	width:139px; height:19px; display:block}
+.formInfo img{
+  border:none; margin:0 0 0 5px;}
+	
+/*------------Personal Details End----------*/
+/*-----------Site Details Start--------
+.siteHead{
+	margin:0 0 7px 0}
+.siteTxt{
+	font:normal 12px/15px Verdana, Arial, Helvetica, sans-serif;
+	color:#767676; text-align:justify; margin:0 0 28px 0}
+.textField{
+	border:1px solid #ECECEC;
+	background:url(../images/textFieldbg.gif) repeat-x 0 100% #fff;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#6E6F6F;	width:249px; height:98px; float:left;
+	padding:2px}
+.subHead{
+	font:bold 14px/17px Verdana, Arial, Helvetica, sans-serif;
+	color:#027688; text-decoration:underline; margin:0 0 10px 31px}
+.subTxt{
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#767676; margin:0 0 26px 31px}
+.smtpBtn{
+	background:url(../images/smtpBtn.jpg) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:98px; height:25px;
+	margin:0 44px 0 90px; padding:0 0 2px 0; cursor:pointer; float:left}
+.submitBtn1{
+	background:url(../images/submitBtn.jpg) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	cursor:pointer; padding:0 0 2px 0; float:left}
+
+	
+-----------Site Details End--------*/
+/*---------Link page Customisation start-----*/
+.labelField1{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	position:relative; float:left; margin:0 0 22px 0}
+.linkbullet{
+	background:url(../images/linkBullet.gif) no-repeat 0 0;
+	width:8px; height:8px; display:block; margin:5px 5px 0 0;
+	float:left}
+.linkBrowseBtn{
+	background:url(../images/linkBrowseBtn.gif) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	margin:0 44px 0 9px; padding:0 0 2px 0; cursor:pointer; float:left}
+.linkBrowseBtn1{
+	background:url(../images/submitBtn.jpg) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	margin:0 44px 0 9px; padding:0 0 2px 0; cursor:pointer; float:left}
+.loadImg{
+	position:relative; float:left}
+.loadImg span{
+	position:absolute; left:10px; top:0;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:24px; width:187px}
+.loadImg span img{
+	width:16px; height:16px; margin:3px 2px 0 0}
+.nameWidth1{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#02374E; width:134px; height:24px;
+	float:left; padding:0 0 0 16px}
+.selectField{
+	border:1px solid #ECECEC;
+	background:url(../images/textFieldbg.gif) repeat-x 0 0;
+	font:normal 11px/22px Verdana, Arial, Helvetica, sans-serif;
+	color:#6E6F6F;	width:257px; height:24px; float:left;
+	padding:2px}
+.preBtn{
+	background:url(../images/previousBtn.jpg) no-repeat 0 0;
+	font:bold 12px/22px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:81px; height:25px;
+	margin:0 25px 0 0; padding:0 0 2px 11px; cursor:pointer; float:left}
+.skipBtn{
+	background:url(../images/skipBtn.jpg) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	cursor:pointer; float:left; padding:0 0 2px 0}
+.colorIcon{
+	background:url(../images/colorimgicon.gif) no-repeat 0 0;
+	float:left; width:28px; height:27px; border:none;
+	margin:0 0 0 9px; cursor:pointer}
+.colorTxt{
+	font:normal 11px/25px Verdana, Arial, Helvetica, sans-serif;
+	color:#767676; margin:0 0 0 9px}
+.radioBtn{
+	float:left; margin:0 5px 0 0}
+.subBtn{
+	float:left; margin:0 0 0 5%}
+.linkSubBtn{
+	 background:url(../images/submitBtn.jpg) no-repeat 0 0;
+	 font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	 color:#fff; border:none; width:71px; height:25px;
+	 cursor:pointer; float:left; margin:0 25px 0 0}
+.loadImage1{
+	float:left;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:24px; width:187px}
+.loadImage1 img{
+	width:16px; height:16px; margin:3px 2px 0 0}
+.viewBtn1{
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:32px; padding:0 0 0 11px; text-decoration:none;
+	float:left; margin:0 11px 0 0}
+.viewBtn1:hover{
+	text-decoration:underline}
+	
+/*---------Link page Customisation end-----*/
+/*------------Add Categories Start-------*/
+.addCathead{
+	margin:0 0 20px 0 !important;}
+.nameWidth2{
+	 width:34px !important;}
+.btnmargin{
+	margin:0 0 0 35px !important}
+.subTxt1{
+	color:#999A9B !important; margin:0 !important}
+.phpTXT{
+	float:right !important}
+/*------------Add Categories end-------*/
+/*-----------Body Part End----------*/
+/*----------Footer Start---------*/
+.footer{
+	background:url(../images/footerbg.gif) repeat 0 0;
+	height:74px; padding:0 0 0 35%}
+.footer p.footerTxt{
+	background:url(../images/footerdivider.gif) no-repeat 0 24px;
+	font:normal 11px/69px Arial, Helvetica, sans-serif; float:left;
+	color:#A1BFCE; padding:0 9px; width:338px}
+
+.fdivider{
+	background:url(../images/footerdivider.gif) no-repeat 0 24px;
+	width:2px; height:74px; display:block; float:left}
+/*----------Footer End---------*/
+
+
+.TextIndicator_TextBox1 {
+         background-color:Gray;
+         color:White;
+         font-family:Arial;
+         font-size:x-small;
+         font-style:italic;  
+         padding: 2px 3px 2px 3px;   
+    }
+
+.password
+		{
+			font-family:Arial;
+			font-size:11px;
+			margin:15px 0 0 0;
+		
+		}
+		
+/*-----------Site Details Start--------*/
+.siteHead{
+ margin:0 0 7px 0}
+.siteTxt{
+ font:normal 12px/15px Verdana, Arial, Helvetica, sans-serif;
+ color:#767676; text-align:justify; margin:0 0 28px 0}
+.textField{
+ border:1px solid #ECECEC;
+ background:url(../images/textFieldbg.gif) repeat-x 0 100% #fff;
+ font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+ color:#6E6F6F; width:249px; height:98px; float:left;
+ padding:2px; margin:0 0 13px 0}
+.subHead{
+ font:bold 14px/17px Verdana, Arial, Helvetica, sans-serif;
+ color:#027688; text-decoration:underline; margin:0 0 10px 31px}
+.subTxt{
+ font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+ color:#767676; padding:0 0 26px 31px}
+.smtpBtn{
+ background:url(../images/smtpBtn.jpg) no-repeat 0 0;
+ font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+ color:#fff; border:none; width:98px; height:25px;
+ margin:0 44px 0 35px; cursor:pointer; float:left}
+.submitBtn1{
+ background:url(../images/submitBtn.jpg) no-repeat 0 0;
+ font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+ color:#fff; border:none; width:71px; height:25px;
+ cursor:pointer; float:left; margin:0 0 0 34px}
+.siteloadImage{
+ font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+ color:#DB0101; height:32px; padding:0 0 0 11px}
+.siteloadImage img{
+ width:16px; height:16px; margin:3px 2px 0 0;}
+.sitepasswordTxt{
+ font:normal 12px/22px Verdana, Arial, Helvetica, sans-serif;
+ color:#DB0101; height:24px; padding:0 0 0 11px}
+
+.authenticTxt{
+	font-size:11px; line-height:14px;
+	padding:0 0 0 34px;}
+.authenticTxt1{
+	padding:0 0 11px 0}
+.checkImg{
+	padding:0 0 0 34px; margin:0 3px 0 0; float:left}
+
+/*-----------Site Details End--------*/
+
+/*-----------the codes r ready start-------*/
+.codesdescrip{
+	float:left; font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#999A9B; text-align:justify; width:30%; height:50%;
+	margin:0 0 0 9px}
+.btnmargin1{
+	margin:0 !important}
+.moreBtn{
+	background:url(../images/addmoreBtn.gif) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:147px; height:25px;
+	margin:0 0 0 24px; cursor:pointer}
+/*-----------the codes r ready end-------*/
+/*-----------create link details start---------*/
+.submitBtn2{
+	background:url(../images/submitBtn.jpg) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	cursor:pointer; float:left;}
+.finalBtn{
+	background:url(../images/finalBtn.gif) no-repeat 0 0;
+	font:bold 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:71px; height:25px;
+	cursor:pointer; float:left; margin:0 0 0 20px;}
+.viewBtn{
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#DB0101; height:32px; padding:0 0 0 11px; text-decoration:none}
+.viewBtn:hover{
+	text-decoration:underline}
+.selectField1{
+	border:1px solid #ECECEC;
+	background:url(../images/textFieldbg.gif) repeat-x 0 0;
+	font:normal 11px/22px Verdana, Arial, Helvetica, sans-serif;
+	color:#6E6F6F;	width:255px; height:24px; float:left;}
+.nameWidth3{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#02374E; width:165px; float:left}
+	
+/*-----------create link details end---------*/
+
+/*#divwidth{
+	background-color:Blue !important}*/
+
+.labelField2{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#02374E}
+
+.siteBgColor{
+	background:#FDFDA9; height:21px;}
+	
+	/*---------link exchange start---------*/
+.sitenameHead{
+	font:bold 16px/19px Verdana, Arial, Helvetica, sans-serif;
+	color:#C30B0B; padding:0 0 11px 0}
+.tableBorder{
+	border:1px solid #CEE6F0}
+.tableBorder1{
+	border-top:2px solid #fff;
+	border-right:1px solid #fff;
+	border-bottom:2px solid #fff;
+	border-left:1px solid #fff;
+	background:#C4E1ED;
+	font:bold 12px/28px Verdana, Arial, Helvetica, sans-serif;
+	color:#13465B}
+.tableBorder2{
+	border-left:2px solid #fff!important}
+.tableBorder4{
+	border-right:2px solid #fff!important}
+.topBorder{
+	background-color:#CEE6F0}
+.bottomBorder{
+	background:url(../images/grey_horzLine.gif) repeat-x 0 0;
+	height:1px}
+.rightBorder{
+	background:url(../images/grey_vertical.gif) repeat-y 100% 0;
+	font:bold 11px/28px Verdana, Arial, Helvetica, sans-serif;
+	color:#888}
+.siteName1{
+	font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
+	color:#3A7993; text-decoration:none; text-align:center}
+.approvedLink{
+	font:normal 11px/21px Verdana, Arial, Helvetica, sans-serif}
+.approvedLink span{
+	font-weight:bold; color:#5C9EB1}
+.approvedLink a{
+	font-weight:bold;
+	color:#C30B0B; text-decoration:none}
+.approvedLink a:hover{
+	color:#5C9EB1; text-decoration:underline}
+.catnameHead{
+	font:bold 12px/19px Verdana, Arial, Helvetica, sans-serif;
+	color:#3D853F; padding:0 0 11px 0}
+.catnameHead a{
+	font:normal 12px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#C30B0B; text-decoration:none}
+.catnameHead a:hover{
+	text-decoration:underline}
+.btnMargin{
+	padding:3px 0 0 0}
+.tdPadd{
+	padding:5px}
+.tableBorder3{
+	border:1px dashed #C5C3C3;
+	margin:5px 0 0 0}
+.formPadding{
+	padding:0px 19px 0 0!important}
+.formPadding1{
+	padding:20px 0 65px 0!important}
+.formTxt{
+	font:bold 11px/23px Verdana, Arial, Helvetica, sans-serif;
+	color:#C90909; padding:11px 19px 0 0}
+.formTxtField{
+	border:1px solid #C8C8C8;
+	background:url(../images/textFieldbg.gif) repeat-x 0 0;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#6E6F6F;	width:385px; height:18px; float:left;
+	padding:2px; margin:11px 0 0 0}
+.formTxtField1{
+	border:1px solid #C8C8C8;
+	background:url(../images/textFieldbg.gif) repeat-x 0 100%;
+	font:normal 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#6E6F6F;	width:385px; height:218px; float:left;
+	padding:2px; margin:11px 0}
+.rejectTxt{
+	font:normal 11px/23px Verdana, Arial, Helvetica, sans-serif;
+	color:#656665; padding:0 0 7px 0}
+.rejectTxt a{
+	font-weight:bold; color:#AC0000; text-decoration:none}
+.rejectTxt a:hover{
+	text-decoration:underline}
+.updateBtn{
+	background:url(../images/updatBtn.gif) no-repeat 0 0;
+	font:bold 11px/14px Verdana, Arial, Helvetica, sans-serif;
+	color:#fff;	border:none; width:242px; height:25px;
+	cursor:pointer; float:left; margin:0 0 0 20px;}
+.siteName{
+	font:bold 11px/21px Verdana, Arial, Helvetica, sans-serif;
+	color:#C30B0B; text-decoration:none; text-align:center;
+	width:179px; height:23px; display:block; margin:2px auto}
+.siteName:hover{
+	background:url(../images/sitenamebg.gif) no-repeat 0 1px;}
+
+/*---------link exchange end---------*/

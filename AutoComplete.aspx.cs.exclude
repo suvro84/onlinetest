@@ -1,0 +1,649 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using DevExpress.Web.ASPxGridView;
+using DevExpress.Web.ASPxEditors;
+using System.Configuration;
+using System.Reflection;
+using System.Collections;
+
+public partial class AutoComplete : System.Web.UI.Page
+{
+    List<Cars> objCars = new List<Cars>();
+    CarsList objCarsList = new CarsList();
+    public int _i = 0;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //if (!IsPostBack)
+        //{
+        //GridLookup.DataSource = GetDatatable();
+        //GridLookup.DataBind();
+
+        //ASPxGridLookup1.DataSource = GetDatatable();
+        //ASPxGridLookup1.DataBind();
+        //objCarsList.ToList<Cars>() = PrepareCarData();
+        objCars = PrepareCarData();
+        Session["data"] = PrepareCarData();
+        ASPxGridView grid = (ASPxGridView)ASPxDropDownEdit1.FindControl("ASPxGridView1");
+        //grid.DataSource = GetDatatable();
+        grid.DataSource = PrepareCarData();
+        grid.DataBind();
+        if (!IsPostBack)
+        {
+            PopulateSearchGrid();
+        }
+        //}
+    }
+    public DataTable GetDatatable()
+    {
+        DataTable table = new DataTable();
+        table.Columns.Add("TagName", typeof(string));
+        table.Columns.Add("Rank", typeof(string));
+        table.Columns.Add("ID", typeof(int));
+
+        table.Rows.Add("Tagtest1", "test1", 1);
+        table.Rows.Add("Tagtest2", "test2", 2);
+        table.Rows.Add("Tagtest3", "test3", 3);
+        table.Rows.Add("Tagtest4", "test4", 4);
+        table.Rows.Add("Tagtest5", "test5", 5);
+        table.Rows.Add("Subrata", "test6", 6);
+        table.Rows.Add("Debabrata", "test7", 7);
+        table.Rows.Add("Arijit", "test8", 8);
+        table.Rows.Add("Tagtest9", "test4", 9);
+        table.Rows.Add("Tagtest10", "test5", 10);
+        table.Rows.Add("Tagtest11", "test6", 11);
+        table.Rows.Add("Tagtest12", "test7", 12);
+        table.Rows.Add("Tagtest13", "test8", 13);
+        ViewState["dtdata"] = table;
+
+        return table;
+
+    }
+
+    protected void ASPxGridView1_CustomCallback(object sender,
+DevExpress.Web.ASPxGridView.ASPxGridViewCustomCallbackEventArgs e)
+    {
+        ((ASPxGridView)sender).FilterExpression = "[Name] Like '" + e.Parameters + "%'";
+    }
+    public void PopulateSearchGrid()
+    {
+        //BWExceptionsBE objExceptionsBE = new BWExceptionsBE();
+        List<RoomTypeMaster> objRoomTypeMaster = new List<RoomTypeMaster>();
+        //hard Coded
+        //objRoomTypeMaster = _presenter.SearchPropertyRoomtypes("00185", "17", objExceptionsBE);
+        objRoomTypeMaster = SearchPropertyRoomtypes();
+        DataTable dtRoomTypeMaster = GenericListToDataTable(objRoomTypeMaster);
+
+        // _presenter.SessionManagerService.SetDTRoomTypeMasterList(dtRoomTypeMaster);
+
+        ViewState["dtdata1"] = dtRoomTypeMaster;
+        RoomTypeMasterList binddingList = new RoomTypeMasterList();
+        binddingList.AddRange(objRoomTypeMaster);
+
+        //AssociateBrandRoomTypes(binddingList);
+        if (objRoomTypeMaster.Count > 0)
+        {
+            gvControlRoomType.DataSource = objRoomTypeMaster;
+            gvControlRoomType.DataBind();
+            //btnDeleteRoom.Visible = true;
+            //popup;
+            RoomTypeMaster objRoomType = new RoomTypeMaster();
+            //if (_presenter.SessionManagerService.GetSelectedRoomTypeList() == null)
+            //{
+
+
+            //    objRoomType = GetGridRowValues(ref  objRoomType, 0);
+            //    _presenter.SessionManagerService.SetSelectedRoomTypeList(objRoomType);
+            //}
+            //else
+            //{
+            //    objRoomType = GetGridRowValues(ref  objRoomType, Convert.ToInt32(hdcurrentRowId.Value));
+
+            //    _presenter.SessionManagerService.SetSelectedRoomTypeList(objRoomType);
+
+            //}
+
+            //_alreadyHasRooms = true;
+            hdTot.Value = Convert.ToString(dtRoomTypeMaster.Rows.Count);
+            ClientScript.RegisterStartupScript(this.GetType(), "alertroomTypeMasterList", "<script type='text/javascript'>document.getElementById('0').style.backgroundColor = '#6999e3'</script>");
+            // ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alertroomTypeMasterList", "document.getElementById('0').style.backgroundColor = '#6999e3'", true);
+
+
+
+
+
+
+
+            // lblAssoRoom.Text = _presenter.SearchPropertyRoomtypes("00185", "17", objExceptionsBE).Count.ToString();
+            //lblAssoRoom.Text = _presenter.SearchPropertyRoomtypes("10726", "17", objExceptionsBE).Count.ToString();
+            hdRoomType.Value = Convert.ToString(objRoomTypeMaster[0].RoomType);
+            textRoomDesc.Value = Convert.ToString(objRoomTypeMaster[0].RoomDesc);
+            txtMaxOccupancy.Value = Convert.ToString(objRoomTypeMaster[0].MaxOccupancy);
+            ddlDiscontinue.SelectedValue = objRoomTypeMaster[0].Discontinue;
+            ddlExtraBed.SelectedValue = objRoomTypeMaster[0].ExtraBed;
+            ddlSmoking.SelectedValue = objRoomTypeMaster[0].Smoking;
+            txtDisplayOrder.Value = Convert.ToString(objRoomTypeMaster[0].DisplayOrder);
+            txtNoOfroom.Value = Convert.ToString(objRoomTypeMaster[0].RoomCnt);
+
+            #region RQT changes
+
+
+            ddlRoomCategoryNew.SelectedValue = Convert.ToString(objRoomTypeMaster[0].RoomCategoryNew) == "" ? "Standard" : Convert.ToString(objRoomTypeMaster[0].RoomCategoryNew);
+
+            ddlBedType1.SelectedValue = Convert.ToString(objRoomTypeMaster[0].BedType1) == "" ? "King" : Convert.ToString(objRoomTypeMaster[0].BedType1);
+            ddlBedType2.SelectedValue = Convert.ToString(objRoomTypeMaster[0].BedType2) == "" ? "King" : Convert.ToString(objRoomTypeMaster[0].BedType2);
+
+
+            txtNoofBedType1.Value = Convert.ToString(objRoomTypeMaster[0].NoBedType1);
+            txtNoofBedType2.Value = Convert.ToString(objRoomTypeMaster[0].NoBedType2);
+
+            txtChild.Value = Convert.ToString(objRoomTypeMaster[0].Children);
+            txtAdults.Value = Convert.ToString(objRoomTypeMaster[0].Adults);
+            txtRoomTypeName.Value = Convert.ToString(objRoomTypeMaster[0].RoomTypeName);
+            txtTotalHotelInventory.Value = Convert.ToString(objRoomTypeMaster[0].TotalHotelInventory);
+            #endregion
+
+            //lookUpEditRoomClass.Text = objRoomTypeMaster[0].RoomClassCode;
+            // Page.ClientScript.RegisterStartupScript(typeof(System.Web.UI.Page), "alertRoomType1", "<script type='text/javascript' language='javascript'>lookUpEditRoomClass.SetText('" + objRoomTypeMaster[0].RoomClassCode + "')</script>");
+        }
+
+    }
+    private void Swap(int index1, int index2, string opt, DataTable dtRoomTypeMaster, bool bflag)
+    {
+
+        if (dtRoomTypeMaster.Rows.Count > 0)
+        {
+            DataRow row1 = null;
+            DataRow row2 = null;
+            if (opt == "dwn" && index2 != dtRoomTypeMaster.Rows.Count)
+            {
+                //Make sure index1 <= index2
+                if (index1 > index2)
+                {
+                    int index = index1;
+                    index1 = index2;
+                    index2 = index;
+                }
+                //Create two rows with the same values.
+                row1 = dtRoomTypeMaster.NewRow();
+                row2 = dtRoomTypeMaster.NewRow();
+                row1.ItemArray = dtRoomTypeMaster.Rows[index1].ItemArray;
+                row2.ItemArray = dtRoomTypeMaster.Rows[index2].ItemArray;
+                if (!IsNonRealRoom(Convert.ToString(row1.ItemArray[0])) && Convert.ToString(row1.ItemArray[5]) != "Y" && (!IsNonRealRoom(Convert.ToString(row2.ItemArray[0])) && Convert.ToString(row2.ItemArray[5]) != "Y"))
+                {
+                    //Remove the old rows.
+                    dtRoomTypeMaster.Rows.RemoveAt(index2);
+                    dtRoomTypeMaster.Rows.RemoveAt(index1);
+                    //Add the new rows.
+                    dtRoomTypeMaster.Rows.InsertAt(row2, index1);
+                    dtRoomTypeMaster.Rows.InsertAt(row1, index2);
+
+                    #region ChangingDisplayOrder
+
+                    if (Convert.ToInt32(row1[11]) + 1 != Convert.ToInt32(row2[11]))// serialization between the  corresponding  rows not  present just swapping the display order of the rows 
+                    {
+                        if (Convert.ToInt32(row1[11]) == Convert.ToInt32(row2[11]))  //ex: 1 1 1
+                        {
+
+
+                            row1[11] = Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) + 1;
+
+                            row2[32] = true;
+                            row1[32] = true;
+                            dtRoomTypeMaster.Rows[index1]["IsDataNeedsToSave"] = true;
+                            dtRoomTypeMaster.Rows[index2]["IsDataNeedsToSave"] = true;
+
+
+
+                            //ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+
+
+                        }
+                        else //ex: 6 15
+                        {
+
+                            if (Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) != 99)
+                            {
+
+                                row1[11] = Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) + 1;
+                                row2[11] = Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) - 1;
+
+                                row2[32] = true;
+                                row1[32] = true;
+
+
+
+
+                                //ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        string tempRow = Convert.ToString(row2[11]);  //serialization present so just swapping the rows..
+                        row2[11] = row1[11];
+                        row1[11] = tempRow;
+                        row2[32] = true;
+                        row1[32] = true;
+
+                        // ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                    }
+
+                    #endregion
+                    // txtDisplayOrder.Value = Convert.ToString(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]);
+                    dtRoomTypeMaster.AcceptChanges();
+
+                    // _presenter.SessionManagerService.SetDTRoomTypeMasterList(dtRoomTypeMaster);
+                    gvControlRoomType.DataSource = dtRoomTypeMaster;
+                    gvControlRoomType.DataBind();
+
+
+                }
+                else
+                {
+                    bflag = true;
+
+                    // ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                    hdcurrentRowId.Value = Convert.ToString(Convert.ToInt16(hdcurrentRowId.Value) - 1);
+                    return;
+                }
+            }
+            else if (opt == "up" && index2 != -1)
+            {
+                if (index1 > index2)
+                {
+                    int index = index1;
+                    index1 = index2;
+                    index2 = index;
+                }
+
+                row1 = dtRoomTypeMaster.NewRow();
+                row2 = dtRoomTypeMaster.NewRow();
+                row1.ItemArray = dtRoomTypeMaster.Rows[index1].ItemArray;
+                row2.ItemArray = dtRoomTypeMaster.Rows[index2].ItemArray;
+
+                if ((!IsNonRealRoom(Convert.ToString(row1.ItemArray[0])) && Convert.ToString(row1.ItemArray[5]) != "Y") && (!IsNonRealRoom(Convert.ToString(row2.ItemArray[0])) && Convert.ToString(row2.ItemArray[5]) != "Y"))
+                {   //Remove the old rows.
+                    dtRoomTypeMaster.Rows.RemoveAt(index2);
+                    dtRoomTypeMaster.Rows.RemoveAt(index1);
+
+                    //Add the new rows.
+                    dtRoomTypeMaster.Rows.InsertAt(row2, index1);
+                    dtRoomTypeMaster.Rows.InsertAt(row1, index2);
+
+                    #region ChangingDisplayOrder
+
+                    if (Convert.ToInt32(row2[11]) - 1 != Convert.ToInt32(row1[11]))// serialization between the  corresponding  rows not  present just swapping the display order of the rows 
+                    {
+                        if (Convert.ToInt32(row1[11]) == Convert.ToInt32(row2[11]))  //ex: 1 1 1
+                        {
+
+
+                            row1[11] = Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) + 1;
+
+                            row2[32] = true;
+                            dtRoomTypeMaster.Rows[index1]["IsDataNeedsToSave"] = true;
+                            dtRoomTypeMaster.Rows[index2]["IsDataNeedsToSave"] = true;
+
+
+
+                            //ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                        }
+                        else //ex: 6 15
+                        {
+
+                            if (Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) != 99)
+                            {
+
+
+                                dtRoomTypeMaster.Rows[index2]["DisplayOrder"] = Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) + 1;
+                                dtRoomTypeMaster.Rows[index1]["DisplayOrder"] = Convert.ToInt32(dtRoomTypeMaster.Rows[index2]["DisplayOrder"]) - 1;
+                                dtRoomTypeMaster.Rows[index1]["IsDataNeedsToSave"] = true;
+                                dtRoomTypeMaster.Rows[index2]["IsDataNeedsToSave"] = true;
+                                row2[32] = true;
+
+
+
+                                //ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+
+
+
+
+                        string tempRow1 = Convert.ToString(row2[11]);  //serialization present so just swapping the rows..
+                        row2[11] = row1[11];
+                        row1[11] = tempRow1;
+
+
+
+
+                        dtRoomTypeMaster.Rows[index1]["IsDataNeedsToSave"] = true;
+                        dtRoomTypeMaster.Rows[index2]["IsDataNeedsToSave"] = true;
+
+
+
+                        //ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                    }
+
+                    #endregion
+
+
+                    //txtDisplayOrder.Value = Convert.ToString(dtRoomTypeMaster.Rows[index1]["DisplayOrder"]);
+                    dtRoomTypeMaster.AcceptChanges();
+                    //_presenter.SessionManagerService.SetDTRoomTypeMasterList(dtRoomTypeMaster);
+                    gvControlRoomType.DataSource = dtRoomTypeMaster;
+                    gvControlRoomType.DataBind();
+
+                }
+                else
+                {
+                    bflag = true;
+
+                    //ClientScript.RegisterStartupScript(this.GetType(), "alert1", "<script>ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');</script>");
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert1", "ColorRows(" + index1 + "," + index2 + ",'" + opt + "','" + bflag + "');", true);
+                    hdcurrentRowId.Value = Convert.ToString(Convert.ToInt16(hdcurrentRowId.Value) + 1);
+                    return;
+
+                }
+
+            }
+        }
+    }
+    private bool IsNonRealRoom(string roomType)
+    {
+        bool isNonReal = false;
+        string[] nonRealRooms;
+        nonRealRooms = ConfigurationManager.AppSettings["NON_REAL_ROOMS"].Split(',');
+        for (int i = 0; i < nonRealRooms.Length; i++)
+        {
+            if (roomType == nonRealRooms.GetValue(i).ToString())
+            {
+                isNonReal = true;
+                return isNonReal;
+            }
+        }
+        return isNonReal;
+    }
+    #region GenericListToDataTable
+    /// <summary>
+    /// Converts a generic List<> into a DataTable.
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns>DataTable</returns>
+    public static DataTable GenericListToDataTable(object list)
+    {
+        DataTable dt = null;
+
+        Type listType = list.GetType();
+        if (listType.IsGenericType)
+        {
+            //determine the underlying type the List<> contains
+            Type elementType = listType.GetGenericArguments()[0];
+
+            //create empty table -- give it a name in case
+            //it needs to be serialized
+            dt = new DataTable(elementType.Name + "List");
+
+            //define the table -- add a column for each public
+            //property or field
+            MemberInfo[] miArray = elementType.GetMembers(
+                BindingFlags.Public | BindingFlags.Instance);
+            foreach (MemberInfo mi in miArray)
+            {
+                if (mi.MemberType == MemberTypes.Property)
+                {
+                    PropertyInfo pi = mi as PropertyInfo;
+                    dt.Columns.Add(pi.Name, pi.PropertyType);
+                }
+                else if (mi.MemberType == MemberTypes.Field)
+                {
+                    FieldInfo fi = mi as FieldInfo;
+                    dt.Columns.Add(fi.Name, fi.FieldType);
+                }
+            }
+            // dt.Columns.Add("bflag", typeof(Boolean));
+            //populate the table
+            IList il = list as IList;
+            foreach (object record in il)
+            {
+                int i = 0;
+                object[] fieldValues = new object[dt.Columns.Count];
+                foreach (DataColumn c in dt.Columns)
+                {
+                    MemberInfo mi = elementType.GetMember(c.ColumnName)[0];
+                    if (mi.MemberType == MemberTypes.Property)
+                    {
+                        PropertyInfo pi = mi as PropertyInfo;
+                        fieldValues[i] = pi.GetValue(record, null);
+                    }
+                    else if (mi.MemberType == MemberTypes.Field)
+                    {
+                        FieldInfo fi = mi as FieldInfo;
+                        fieldValues[i] = fi.GetValue(record);
+                    }
+                    i++;
+                }
+                dt.Rows.Add(fieldValues);
+            }
+        }
+        return dt;
+    }
+    #endregion
+    protected void gvControlRoomType_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow && (e.Row.RowState == DataControlRowState.Alternate || e.Row.RowState == DataControlRowState.Normal))
+            {
+
+                DataTable dtRoomTypeMaster = new DataTable();
+                RoomTypeMasterList roomTypeMasterList = new RoomTypeMasterList();
+
+
+
+
+                //if (_presenter.SessionManagerService.GetDTRoomTypeMasterList() != null || _presenter.SessionManagerService.GetRoomTypeMasterList() != null)
+                //{
+
+                //dtRoomTypeMaster = _presenter.SessionManagerService.GetDTRoomTypeMasterList();
+
+                //List<RoomTypeMaster> objRoomTypeMaster = null;
+                //if (_presenter.SessionManagerService.GetRoomTypeMasterList() != null)
+                //{
+                //    roomTypeMasterList = _presenter.SessionManagerService.GetRoomTypeMasterList();
+                //    objRoomTypeMaster = roomTypeMasterList.ToList<RoomTypeMaster>();
+                //}
+                //if (roomTypeMasterList.Count > 0)
+                //{
+
+                //    dtRoomTypeMaster = GenericListToDataTable(objRoomTypeMaster);
+                //    hdTot.Value = Convert.ToString(dtRoomTypeMaster.Rows.Count);
+
+                //}
+
+
+
+
+
+
+                //if (dtRoomTypeMaster != null)
+                //{
+                //    if (dtRoomTypeMaster.Rows.Count > 0)
+                //    {
+                //        if (_i == dtRoomTypeMaster.Rows.Count)
+                //        {
+                //            _i = 0;
+                //        }
+                //    }
+                //}
+                //else if (roomTypeMasterList != null)
+                //{
+                //    if (roomTypeMasterList.Count > 0)
+                //    {
+
+                //        if (_i == roomTypeMasterList.Count)
+                //        {
+                //            _i = 0;
+                //        }
+                //    }
+                //}
+
+                e.Row.Attributes.Add("id", _i.ToString());
+                e.Row.Attributes.Add("onKeyDown", "SelectRow();");
+                e.Row.Attributes.Add("onClick", "MarkRow(" + _i.ToString() + ");");
+                if (e.Row.RowIndex % 2 != 0)
+                {
+                    e.Row.Attributes.Add("class", "odd");
+                }
+                else
+                {
+                    e.Row.Attributes.Add("class", "even");
+                }
+
+            }
+            _i++;
+            // }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    public RoomTypeMaster GetGridRowValues(ref RoomTypeMaster information, int intSeletedRow)
+    {
+        Literal ltDisplayOrder = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltDisplayOrder");
+        Literal ltRoomType = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltRoomType");
+        Literal ltRoomClassCode = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltRoomClassCode");
+        Literal ltRoomDesc = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltRoomDesc");
+        Literal ltDiscontinue = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltDiscontinue");
+        Literal ltGeneric = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltGeneric");
+        Literal ltSmoking = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltSmoking");
+        Literal ltType = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltType");
+        Literal ltExtraBed = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltExtraBed");
+        Literal ltMaxOccupancy = (Literal)gvControlRoomType.Rows[Convert.ToInt32(intSeletedRow)].FindControl("ltMaxOccupancy");
+        information.DisplayOrder = Convert.ToInt32(ltDisplayOrder.Text);
+        information.RoomType = ltRoomType.Text;
+        information.RoomClassCode = ltRoomClassCode.Text;
+        information.RoomDesc = ltRoomDesc.Text;
+        information.Discontinue = ltDiscontinue.Text;
+        information.Generic = ltGeneric.Text;
+        information.Smoking = ltSmoking.Text;
+        information.Type = ltType.Text;
+        information.ExtraBed = ltExtraBed.Text;
+        information.MaxOccupancy = Convert.ToInt32(ltMaxOccupancy.Text);
+        return information;
+    }
+    public List<Cars> GetCarManufacturer()
+    {
+        return PrepareCarData();
+    }
+    //
+    public List<RoomTypeMaster> SearchPropertyRoomtypes()
+    {
+        List<RoomTypeMaster> objRoomTypeMaster = new List<RoomTypeMaster> { 
+                  new RoomTypeMaster{RoomType = "XQ1", RoomDesc="Testdesc1",DisplayOrder=1,RoomClassCode="ABC",Discontinue="Yes",Generic="XX",Smoking="11",Type="1",ExtraBed="1",MaxOccupancy=1,RoomCategory="test",RoomTypeName="testRoomTypeName1",IsDataNeedsToSave=false,BedType1="King",BedType2="King",NoBedType1="1",NoBedType2="1",Adults="1",Children="1",TotalHotelInventory="1",DelButtonFlag=false,RoomCnt=1} ,
+                new RoomTypeMaster{RoomType = "XQ2", RoomDesc="Testdesc2",DisplayOrder=1,RoomClassCode="ABD",Discontinue="Yes",Generic="XX",Smoking="11",Type="1",ExtraBed="1",MaxOccupancy=1,RoomCategory="test",RoomTypeName="testRoomTypeName2",IsDataNeedsToSave=false,BedType1="King",BedType2="King",NoBedType1="1",NoBedType2="2",Adults="1",Children="1",TotalHotelInventory="1",DelButtonFlag=false,RoomCnt=1} ,
+                 new RoomTypeMaster{RoomType = "XQ3", RoomDesc="Testdesc3",DisplayOrder=2,RoomClassCode="ABE",Discontinue="Yes",Generic="XX",Smoking="11",Type="1",ExtraBed="1",MaxOccupancy=1,RoomCategory="test",RoomTypeName="testRoomTypeName3",IsDataNeedsToSave=false,BedType1="King",BedType2="King",NoBedType1="1",NoBedType2="3",Adults="1",Children="1",TotalHotelInventory="1",DelButtonFlag=false,RoomCnt=1} ,
+                new RoomTypeMaster{RoomType = "XQ4", RoomDesc="Testdesc4",DisplayOrder=99,RoomClassCode="ABF",Discontinue="Yes",Generic="XX",Smoking="11",Type="1",ExtraBed="1",MaxOccupancy=1,RoomCategory="test",RoomTypeName="testRoomTypeName4",IsDataNeedsToSave=false,BedType1="King",BedType2="King",NoBedType1="1",NoBedType2="4",Adults="1",Children="1",TotalHotelInventory="1",DelButtonFlag=false,RoomCnt=1} ,
+                 new RoomTypeMaster{RoomType = "XQ5", RoomDesc="Testdesc5",DisplayOrder=99,RoomClassCode="ABG",Discontinue="Yes",Generic="XX",Smoking="11",Type="1",ExtraBed="1",MaxOccupancy=1,RoomCategory="test",RoomTypeName="testRoomTypeName5",IsDataNeedsToSave=false,BedType1="King",BedType2="King",NoBedType1="1",NoBedType2="5",Adults="1",Children="1",TotalHotelInventory="1",DelButtonFlag=false,RoomCnt=1} ,
+                 new RoomTypeMaster{RoomType = "XQ6", RoomDesc="Testdesc6",DisplayOrder=99,RoomClassCode="ABH",Discontinue="Yes",Generic="XX",Smoking="11",Type="1",ExtraBed="1",MaxOccupancy=1,RoomCategory="test",RoomTypeName="testRoomTypeName6",IsDataNeedsToSave=false,BedType1="King",BedType2="King",NoBedType1="1",NoBedType2="6",Adults="1",Children="1",TotalHotelInventory="1",DelButtonFlag=false,RoomCnt=1} ,
+            };
+
+        return objRoomTypeMaster;
+    }
+    public List<Cars> PrepareCarData()
+    {
+        List<Cars> objCars = new List<Cars> { 
+                  new Cars{Name = "Merc", manufacturerid= 1} ,
+                  new Cars{Name = "BMW", manufacturerid= 2} ,
+                  new Cars{Name = "Audi", manufacturerid= 3} ,
+                  new Cars{Name = "Suzuki", manufacturerid= 4} ,
+                  new Cars{Name = "GM", manufacturerid= 5} ,
+                  new Cars{Name = "Toyoto", manufacturerid= 6 } ,
+            };
+
+        return objCars;
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        objCars = (List<Cars>)Session["data"];
+        //objCars.RemoveAll(x => x.Name == "Merc");
+        ASPxGridView grid = (ASPxGridView)ASPxDropDownEdit1.FindControl("ASPxGridView1");
+        // grid.Selection.UnselectAll();
+        string names = "";
+        for (int i = 0; i < grid.VisibleRowCount; i++)
+        {
+            if (grid.Selection.IsRowSelected(i))
+            {
+                //grid.Selection.UnselectRow(i);
+                if (names == "")
+                {
+
+                    names = grid.GetRowValues(i, new string[] { grid.Columns[1].ToString() }).ToString();
+                }
+                else
+                {
+                    names = names + ',' + grid.GetRowValues(i, new string[] { grid.Columns[1].ToString() }).ToString(); ;
+                }
+
+            }
+
+            //}
+            //string s = grid.GetRowValues(i, new string[] { grid.Columns[1].ToString() }).ToString();
+            //ASPxCheckBox IsChecked = grid.FindRowCellTemplateControl(i, grid.Columns[0] as GridViewDataColumn, "chkChecked") as ASPxCheckBox;
+
+            //if (IsChecked.Checked == true)
+            //{
+            //}
+
+
+
+
+
+            //    // Property =  == null ? null : grid.GetRowValues(i, new string[] { grid.Columns[1].ToString() }).ToString(),
+
+            //    //  Brand = (grid.GetRowValues(i, new string[] { grid.Columns[1].ToString() }) == null ? null : propertyBrand.Value),
+
+
+
+
+
+
+        }
+        grid.DataSource = objCars;
+        grid.DataBind();
+        Response.Write(names);
+    }
+}
+
+public class Cars
+{
+    public string Name { get; set; }
+    public int manufacturerid { get; set; }
+
+
+}
+
+public class CarsList : List<Cars>
+{
+}
+
+
